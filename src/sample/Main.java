@@ -5,9 +5,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -20,6 +17,7 @@ public class Main extends Application {
         MenuController menuController = loader.getController();
         stage.setTitle("Asia God Tone Hot Pot");
         Scene menu = new Scene(root);
+        System.out.println("Hi");
         //主選單的scene
         menu.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
