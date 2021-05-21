@@ -73,7 +73,7 @@ public class Level1Controller {
                         gridpane.getChildren().add(fire);
                         break;
                     case 3://ice
-                        Image iceImage = new Image(getClass().getResourceAsStream("/image/ice.jpeg"), tube, tube, false, false);
+                        Image iceImage = new Image(getClass().getResourceAsStream("/image/ice.png"), tube, tube, false, false);
                         ImageView ice = new ImageView(iceImage);
                         GridPane.setConstraints(ice, j, i);
                         gridpane.getChildren().add(ice);
@@ -124,7 +124,7 @@ public class Level1Controller {
                         break;
                     case 3://ice
                         if (map2[i][j] != map[i][j]) {
-                            Image iceImage = new Image(getClass().getResourceAsStream("/image/ice.jpeg"), tube, tube, false, false);
+                            Image iceImage = new Image(getClass().getResourceAsStream("/image/ice.png"), tube, tube, false, false);
                             ImageView ice = new ImageView(iceImage);
                             GridPane.setConstraints(ice, j, i);
                             gridpane.getChildren().add(ice);
