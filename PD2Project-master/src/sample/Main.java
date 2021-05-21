@@ -10,8 +10,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
+import java.io.*;
 public class Main extends Application {
+    private String level="";
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -20,6 +21,14 @@ public class Main extends Application {
         MenuController menuController = loader.getController();
         stage.setTitle("Asia God Tone Hot Pot");
         Scene menu = new Scene(root);
+        //存檔
+        try {
+            BufferedReader br=new BufferedReader(new FileReader("PD2Project-master/src/sample/level.txt"));
+            level=br.readLine();
+            br.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         //主選單的scene
         menu.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -39,6 +48,18 @@ public class Main extends Application {
                         if (menuController.getHotpotY() == 1){
                             menuController.toLevel1();
                             stage.close();
+                        }
+                        else if(menuController.getHotpotY()==2){
+                            //讀檔 看上次第幾關就從第幾關開始
+                            switch (level) {
+                                case"1":
+                                    menuController.toLevel1();
+                                    stage.close();
+                                    break;
+                                case "2":
+                                    System.out.println("level2");
+                                    break;
+                            }
                         }
                         //Exit
                         if (menuController.getHotpotY() == 4)

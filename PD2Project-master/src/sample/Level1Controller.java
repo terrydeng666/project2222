@@ -1,28 +1,17 @@
 package sample;
 
-import javafx.animation.TranslateTransition;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 import javafx.fxml.FXML;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
+import java.io.*;
 
-import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-public class Level1Controller {
+public class Level1Controller implements Initializable {
 
     @FXML
     private GridPane gridpane;
@@ -325,4 +314,30 @@ public class Level1Controller {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        SetLevel();
+
+    }
+    private void SetLevel() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("PD2Project-master/src/sample/level.txt"));
+            StringBuffer ib = new StringBuffer();
+            String s;
+
+            while ((s = br.readLine()) != null) {
+                s="1";
+                ib.append(s);
+            }
+            br.close();
+
+            FileOutputStream fo = new FileOutputStream("PD2Project-master/src/sample/level.txt");
+            fo.write(ib.toString().getBytes());
+            fo.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
