@@ -60,7 +60,6 @@ public class MenuController implements Initializable {
         translate.setByY(32);
         translate.play();
         y++;
-
     }
     public void toLevel1() {
         try {

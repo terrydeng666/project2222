@@ -1,6 +1,10 @@
 package sample;
 
 
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -9,6 +13,8 @@ import javafx.fxml.FXML;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
+
 import java.io.*;
 
 public class Level1Controller implements Initializable {
@@ -24,7 +30,7 @@ public class Level1Controller implements Initializable {
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 3, 1, 4, 1, 1, 1, 1, 1, 0},
+            {0, 1, 5, 1, 4, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     int[][] map2 = new int[][]{
@@ -36,7 +42,7 @@ public class Level1Controller implements Initializable {
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 3, 1, 4, 1, 1, 1, 1, 1, 0},
+            {0, 1, 5, 1, 4, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     private final int mapHeight = map.length - 2;
@@ -74,6 +80,12 @@ public class Level1Controller implements Initializable {
                         gridpane.getChildren().add(player);
                         playerY = i;
                         playerX = j;
+                        break;
+                    case 5:
+                        Image goldIceImage = new Image(getClass().getResourceAsStream("/image/Au.jpg"), tube, tube, false, false);
+                        ImageView goldIce = new ImageView(goldIceImage);
+                        GridPane.setConstraints(goldIce, j, i);
+                        gridpane.getChildren().add(goldIce);
                         break;
                     case 0:
                         Image wallImage = new Image(getClass().getResourceAsStream("/image/wall.png"), tube, tube, false, false);
@@ -131,7 +143,15 @@ public class Level1Controller implements Initializable {
                             map[i][j] = map2[i][j];
                         }
                         break;
-
+                    case 5:
+                        if (map2[i][j] != map[i][j]) {
+                            Image goldIceImage = new Image(getClass().getResourceAsStream("/image/Au.jpg"), tube, tube, false, false);
+                            ImageView goldIce = new ImageView(goldIceImage);
+                            GridPane.setConstraints(goldIce, j, i);
+                            gridpane.getChildren().add(goldIce);
+                            map[i][j] = map2[i][j];
+                        }
+                        break;
                     case 0:
                         if (map2[i][j] != map[i][j]) {
                             Image wallImage = new Image(getClass().getResourceAsStream("/image/wall.png"), tube, tube, false, false);
@@ -148,7 +168,7 @@ public class Level1Controller implements Initializable {
         }
     }
     @FXML
-    void keyPressed(KeyEvent event) {
+    void keyPressed(KeyEvent event) throws IOException {
         switch (event.getCode()) {
             case W:
                 if(map2[playerY-1][playerX]==0)//底線
@@ -170,6 +190,21 @@ public class Level1Controller implements Initializable {
                         }
                         map2[i+1][playerX]=1;
                         map2[i][playerX]=3;
+                    }
+                }
+                if(map2[playerY-1][playerX]==5){//碰到冰塊
+                    if(map2[playerY-2][playerX]==0||map2[playerY-2][playerX]==3)
+                        return;
+                    for(int i=playerY-1;i>=1;i--){
+                        if(map2[i][playerX]==2) {//冰塊碰到火
+                            map2[i][playerX]=1;
+                        }
+                        if((map2[i][playerX]==3||map2[i][playerX]==0)&&i!=playerY-1){//冰塊跟牆壁
+                            map2[i+1][playerX]=5;
+                            break;
+                        }
+                        map2[i+1][playerX]=1;
+                        map2[i][playerX]=5;
                     }
                 }
                 map2[playerY][playerX] = 1;
@@ -214,6 +249,22 @@ public class Level1Controller implements Initializable {
                         map2[playerY][i] = 3;
                     }
                 }
+                if (map2[playerY][playerX - 1] == 5) {//碰到冰塊
+                    if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3)
+                        return;
+                    for (int i = playerX - 1; i >= 1; i--) {
+                        if (map2[playerY][i] == 2) {
+                            map2[playerY][i] = 1;
+                        }
+                        if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX - 1) {//冰塊跟牆壁(還沒寫)
+                            System.out.println("YES");
+                            map2[playerY][i + 1] = 5;
+                            break;
+                        }
+                        map2[playerY][i + 1] = 1;
+                        map2[playerY][i] = 5;
+                    }
+                }
                 map2[playerY][playerX - 1] = 4;
                 map2[playerY][playerX] = 1;
                 drawMap2();
@@ -252,6 +303,21 @@ public class Level1Controller implements Initializable {
                         }
                         map2[i - 1][playerX] = 1;
                         map2[i][playerX] = 3;
+                    }
+                }
+                if (map2[playerY + 1][playerX] == 5) {//碰到冰塊
+                    if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3)
+                        return;
+                    for (int i = playerY + 1; i <= mapHeight; i++) {
+                        if (map2[i][playerX] == 2) {
+                            map2[i][playerX] = 1;
+                        }
+                        if ((map2[i][playerX] == 3 || map2[i][playerX] == 0) && i != playerY + 1) {//冰塊跟牆壁(還沒寫)
+                            map2[i - 1][playerX] = 3;
+                            break;
+                        }
+                        map2[i - 1][playerX] = 1;
+                        map2[i][playerX] = 5;
                     }
                 }
                 map2[playerY + 1][playerX] = 4;
@@ -293,6 +359,21 @@ public class Level1Controller implements Initializable {
                         map2[playerY][i] = 3;
                     }
                 }
+                if (map2[playerY][playerX + 1] == 5) {//碰到冰塊
+                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3)
+                        return;
+                    for (int i = playerX + 1; i <= mapWidth; i++) {
+                        if (map2[playerY][i] == 2) {
+                            map2[playerY][i] = 1;
+                        }
+                        if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX + 1) {//冰塊跟牆壁(還沒寫)
+                            map2[playerY][i - 1] = 5;
+                            break;
+                        }
+                        map2[playerY][i - 1] = 1;
+                        map2[playerY][i] = 5;
+                    }
+                }
                 map2[playerY][playerX + 1] = 4;
                 map2[playerY][playerX] = 1;
                 drawMap2();
@@ -312,7 +393,10 @@ public class Level1Controller implements Initializable {
                 for (int i = 1; i <= 9; i++){
                     for (int j = 1; j <= 9; j++){
                         if (10 - j == i && i != j && j <= 8 && j >= 2){
-                            map2[i][j] = 3;
+                            if (i == 8 && j == 2)
+                                map2[i][j] = 5;
+                            else
+                                map2[i][j] = 3;
                         }
                         else if (i == j && i == 5){
                             map2[i][j] = 2;
