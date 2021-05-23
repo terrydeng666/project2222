@@ -311,7 +311,7 @@ public class Level1Controller implements Initializable {
             case R: //重新開始
                 for (int i = 1; i <= 9; i++){
                     for (int j = 1; j <= 9; j++){
-                        if (10 - j == i && i != j){
+                        if (10 - j == i && i != j && j <= 8 && j >= 2){
                             map2[i][j] = 3;
                         }
                         else if (i == j && i == 5){
