@@ -308,6 +308,25 @@ public class Level1Controller implements Initializable {
 //                    }
 //                }
                 break;
+            case R: //重新開始
+                for (int i = 1; i <= 9; i++){
+                    for (int j = 1; j <= 9; j++){
+                        if (10 - j == i && i != j){
+                            map2[i][j] = 3;
+                        }
+                        else if (i == j && i == 5){
+                            map2[i][j] = 2;
+                        }
+                        else if (i == 8 && j == 4){
+                            map2[i][j] = 4;
+                        }
+                        else {
+                            map2[i][j] = 1;
+                        }
+                    }
+                }
+                drawMap2();
+                break;
             default:
                 break;
         }
