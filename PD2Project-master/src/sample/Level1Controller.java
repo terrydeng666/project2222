@@ -24,32 +24,44 @@ public class Level1Controller implements Initializable {
     int[][] map = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 0},
+            {0, 8, 1, 1, 1, 1, 1, 9, 3, 1, 0},
+            {0, 1, 1, 1, 1, 1, 1, 5, 1, 1, 0},
+            {0, 8, 1, 1, 1, 1, 3, 1, 3, 1, 0},
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 5, 1, 4, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+            {0, 1, 3, 1, 4, 1, 1, 1, 1, 1, 0},
+            {0, 7, 1, 1, 1, 1, 1, 1, 1, 6, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     int[][] map2 = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0},
-            {0, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0},
-            {0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 0},
+            {0, 8, 1, 1, 1, 1, 1, 9, 3, 1, 0},
+            {0, 1, 1, 1, 1, 1, 1, 5, 1, 1, 0},
+            {0, 8, 1, 1, 1, 1, 3, 1, 3, 1, 0},
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 5, 1, 4, 1, 1, 1, 1, 1, 0},
+            {0, 1, 3, 1, 4, 1, 1, 1, 1, 1, 0},
+            {0, 7, 1, 1, 1, 1, 1, 1, 1, 6, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    int[][] map3 = new int[][]{
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+            {0, 8, 1, 1, 1, 1, 1, 9, 3, 1, 0},
+            {0, 1, 1, 1, 1, 1, 1, 5, 1, 1, 0},
+            {0, 8, 1, 1, 1, 1, 3, 1, 3, 1, 0},
+            {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
+            {0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0},
+            {0, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0},
+            {0, 1, 3, 1, 4, 1, 1, 1, 1, 1, 0},
+            {0, 7, 1, 1, 1, 1, 1, 1, 1, 6, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     private final int mapHeight = map.length - 2;
     private final int mapWidth = map[1].length - 2;
     private int playerX;
     private int playerY;
-
+    private boolean iceOnPlayer=false;
     public void drawMap() {
         for (int i = 0; i < map.length; i++) {//h
             for (int j = 0; j < map[0].length; j++) {//w
@@ -86,6 +98,30 @@ public class Level1Controller implements Initializable {
                         ImageView goldIce = new ImageView(goldIceImage);
                         GridPane.setConstraints(goldIce, j, i);
                         gridpane.getChildren().add(goldIce);
+                        break;
+                    case 9://ArrowLeft
+                        Image ArrowLeft = new Image(getClass().getResourceAsStream("/image/arrowLeft.png"), tube, tube, false, false);
+                        ImageView ArrowL = new ImageView(ArrowLeft);
+                        GridPane.setConstraints(ArrowL, j, i);
+                        gridpane.getChildren().add(ArrowL);
+                        break;
+                    case 6://ArrowUp
+                        Image ArrowUp = new Image(getClass().getResourceAsStream("/image/arrowUp.png"), tube, tube, false, false);
+                        ImageView ArrowU = new ImageView(ArrowUp);
+                        GridPane.setConstraints(ArrowU, j, i);
+                        gridpane.getChildren().add(ArrowU);
+                        break;
+                    case 7://ArrowRight
+                        Image ArrowRight = new Image(getClass().getResourceAsStream("/image/arrowRight.png"), tube, tube, false, false);
+                        ImageView ArrowR = new ImageView(ArrowRight);
+                        GridPane.setConstraints(ArrowR, j, i);
+                        gridpane.getChildren().add(ArrowR);
+                        break;
+                    case 8://ArrowDown
+                        Image ArrowDown = new Image(getClass().getResourceAsStream("/image/arrowDown.png"), tube, tube, false, false);
+                        ImageView ArrowD = new ImageView(ArrowDown);
+                        GridPane.setConstraints(ArrowD, j, i);
+                        gridpane.getChildren().add(ArrowD);
                         break;
                     case 0:
                         Image wallImage = new Image(getClass().getResourceAsStream("/image/wall.png"), tube, tube, false, false);
@@ -152,6 +188,42 @@ public class Level1Controller implements Initializable {
                             map[i][j] = map2[i][j];
                         }
                         break;
+                    case 9://ArrowLeft
+                        if(map2[i][j] != map[i][j]) {
+                            Image ArrowLeft = new Image(getClass().getResourceAsStream("/image/arrowLeft.png"), tube, tube, false, false);
+                            ImageView ArrowL = new ImageView(ArrowLeft);
+                            GridPane.setConstraints(ArrowL, j, i);
+                            gridpane.getChildren().add(ArrowL);
+                            map[i][j] = map2[i][j];
+                        }
+                        break;
+                    case 6://ArrowUp
+                        if(map2[i][j] != map[i][j]) {
+                            Image ArrowUp = new Image(getClass().getResourceAsStream("/image/arrowUp.png"), tube, tube, false, false);
+                            ImageView ArrowU = new ImageView(ArrowUp);
+                            GridPane.setConstraints(ArrowU, j, i);
+                            gridpane.getChildren().add(ArrowU);
+                            map[i][j] = map2[i][j];
+                        }
+                        break;
+                    case 7://ArrowRight
+                        if(map2[i][j] != map[i][j]) {
+                            Image ArrowRight = new Image(getClass().getResourceAsStream("/image/arrowRight.png"), tube, tube, false, false);
+                            ImageView ArrowR = new ImageView(ArrowRight);
+                            GridPane.setConstraints(ArrowR, j, i);
+                            gridpane.getChildren().add(ArrowR);
+                            map[i][j] = map2[i][j];
+                        }
+                        break;
+                    case 8://ArrowDown
+                        if(map2[i][j] != map[i][j]) {
+                            Image ArrowDown = new Image(getClass().getResourceAsStream("/image/arrowDown.png"), tube, tube, false, false);
+                            ImageView ArrowD = new ImageView(ArrowDown);
+                            GridPane.setConstraints(ArrowD, j, i);
+                            gridpane.getChildren().add(ArrowD);
+                            map[i][j] = map2[i][j];
+                        }
+                        break;
                     case 0:
                         if (map2[i][j] != map[i][j]) {
                             Image wallImage = new Image(getClass().getResourceAsStream("/image/wall.png"), tube, tube, false, false);
@@ -171,43 +243,37 @@ public class Level1Controller implements Initializable {
     void keyPressed(KeyEvent event) throws IOException {
         switch (event.getCode()) {
             case W:
+                int icetype=0;
                 if(map2[playerY-1][playerX]==0)//底線
                     return;
                 if(map2[playerY-1][playerX]==2)//碰到火
                     return;
+                if(map2[playerY-1][playerX]>=6 &&map2[playerY-1][playerX]<=9) {
+                    return;
+                }
                 if(map2[playerY-1][playerX]==3){//碰到冰塊
                     if(map2[playerY-2][playerX]==0||map2[playerY-2][playerX]==3)
                         return;
-                    for(int i=playerY-1;i>=1;i--){
-                        if(map2[i][playerX]==2) {//冰塊碰到火
-                            map2[i][playerX]=1;
-                            map2[i+1][playerX]=1;
-                            break;
-                        }
-                        if((map2[i][playerX]==3||map2[i][playerX]==0)&&i!=playerY-1){//冰塊跟牆壁
-                            map2[i+1][playerX]=3;
-                            break;
-                        }
-                        map2[i+1][playerX]=1;
-                        map2[i][playerX]=3;
-                    }
+                    if(map2[playerY-2][playerX]==5)
+                        return;
+                    IceMove(1,3);
+                    icetype=3;
                 }
                 if(map2[playerY-1][playerX]==5){//碰到冰塊
-                    if(map2[playerY-2][playerX]==0||map2[playerY-2][playerX]==3)
+                    if(map2[playerY-2][playerX]==0||map2[playerY-2][playerX]==5)
                         return;
-                    for(int i=playerY-1;i>=1;i--){
-                        if(map2[i][playerX]==2) {//冰塊碰到火
-                            map2[i][playerX]=1;
-                        }
-                        if((map2[i][playerX]==3||map2[i][playerX]==0)&&i!=playerY-1){//冰塊跟牆壁
-                            map2[i+1][playerX]=5;
-                            break;
-                        }
-                        map2[i+1][playerX]=1;
-                        map2[i][playerX]=5;
-                    }
+                    if(map2[playerY-2][playerX]==3)
+                        return;
+                    IceMove(1,5);
+                    icetype=5;
                 }
-                map2[playerY][playerX] = 1;
+                if(iceOnPlayer) {
+                    map2[playerY][playerX] = icetype;
+                    iceOnPlayer=false;
+                }
+                else {
+                    map2[playerY][playerX] = 1;
+                }
                 map2[playerY-1][playerX] = 4;
                 System.out.println("up");
                 drawMap2();
@@ -224,9 +290,12 @@ public class Level1Controller implements Initializable {
 //                }
                 break;
             case A:
+                icetype=0;
                 if (map2[playerY][playerX - 1] == 0)
                     return;
                 if (map2[playerY][playerX - 1] == 2)
+                    return;
+                if (map2[playerY][playerX - 1] >= 6 &&map2[playerY][playerX - 1] <= 9)
                     return;
 //                if(playerY.equals(GridPane.getRowIndex(fire)) &&playerX==GridPane.getColumnIndex(fire)+1&&fire.isVisible())//邊線
 //                    return;
@@ -234,39 +303,27 @@ public class Level1Controller implements Initializable {
                 if (map2[playerY][playerX - 1] == 3) {//碰到冰塊
                     if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3)
                         return;
-                    for (int i = playerX - 1; i >= 1; i--) {
-                        if (map2[playerY][i] == 2) {
-                            map2[playerY][i] = 1;
-                            map2[playerY][i + 1] = 1;
-                            break;
-                        }
-                        if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX - 1) {//冰塊跟牆壁(還沒寫)
-                            System.out.println("YES");
-                            map2[playerY][i + 1] = 3;
-                            break;
-                        }
-                        map2[playerY][i + 1] = 1;
-                        map2[playerY][i] = 3;
-                    }
+                    if (map2[playerY][playerX - 2] == 5)
+                        return;
+                    IceMove(2,3);
+                    icetype=3;
                 }
                 if (map2[playerY][playerX - 1] == 5) {//碰到冰塊
                     if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3)
                         return;
-                    for (int i = playerX - 1; i >= 1; i--) {
-                        if (map2[playerY][i] == 2) {
-                            map2[playerY][i] = 1;
-                        }
-                        if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX - 1) {//冰塊跟牆壁(還沒寫)
-                            System.out.println("YES");
-                            map2[playerY][i + 1] = 5;
-                            break;
-                        }
-                        map2[playerY][i + 1] = 1;
-                        map2[playerY][i] = 5;
-                    }
+                    if (map2[playerY][playerX - 2] == 5)
+                        return;
+                    IceMove(2,5);
+                    icetype=5;
                 }
                 map2[playerY][playerX - 1] = 4;
-                map2[playerY][playerX] = 1;
+                if(iceOnPlayer) {
+                    map2[playerY][playerX] = icetype;
+                    iceOnPlayer=false;
+                }
+                else {
+                    map2[playerY][playerX] = 1;
+                }
                 drawMap2();
                 System.out.println("left");
 
@@ -281,9 +338,12 @@ public class Level1Controller implements Initializable {
 //                }
                 break;
             case S:
+                icetype=0;
                 if (map2[playerY + 1][playerX] == 0)
                     return;
                 if (map2[playerY + 1][playerX] == 2)
+                    return;
+                if (map2[playerY + 1][playerX] >= 6 &&map2[playerY + 1][playerX] <= 9)
                     return;
 //                if (playerY==GridPane.getRowIndex(fire)-1&& playerX.equals(GridPane.getColumnIndex(fire)) &&fire.isVisible())
 //                    return;
@@ -291,37 +351,27 @@ public class Level1Controller implements Initializable {
                 if (map2[playerY + 1][playerX] == 3) {//碰到冰塊
                     if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3)
                         return;
-                    for (int i = playerY + 1; i <= mapHeight; i++) {
-                        if (map2[i][playerX] == 2) {
-                            map2[i][playerX] = 1;
-                            map2[i - 1][playerX] = 1;
-                            break;
-                        }
-                        if ((map2[i][playerX] == 3 || map2[i][playerX] == 0) && i != playerY + 1) {//冰塊跟牆壁(還沒寫)
-                            map2[i - 1][playerX] = 3;
-                            break;
-                        }
-                        map2[i - 1][playerX] = 1;
-                        map2[i][playerX] = 3;
-                    }
+                    if (map2[playerY + 2][playerX] == 5)
+                        return;
+                    IceMove(3,3);
+                    icetype=3;
                 }
                 if (map2[playerY + 1][playerX] == 5) {//碰到冰塊
                     if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3)
                         return;
-                    for (int i = playerY + 1; i <= mapHeight; i++) {
-                        if (map2[i][playerX] == 2) {
-                            map2[i][playerX] = 1;
-                        }
-                        if ((map2[i][playerX] == 3 || map2[i][playerX] == 0) && i != playerY + 1) {//冰塊跟牆壁(還沒寫)
-                            map2[i - 1][playerX] = 3;
-                            break;
-                        }
-                        map2[i - 1][playerX] = 1;
-                        map2[i][playerX] = 5;
-                    }
+                    if (map2[playerY + 2][playerX] == 5)
+                        return;
+                    IceMove(3,5);
+                    icetype=5;
+                }
+                if(iceOnPlayer) {
+                    map2[playerY][playerX] = icetype;
+                    iceOnPlayer=false;
+                }
+                else {
+                    map2[playerY][playerX] = 1;
                 }
                 map2[playerY + 1][playerX] = 4;
-                map2[playerY][playerX] = 1;
                 drawMap2();
                 System.out.println("down");
 //                if(playerY.equals(GridPane.getRowIndex(ice)) && playerX.equals(GridPane.getColumnIndex(ice))) {
@@ -336,46 +386,39 @@ public class Level1Controller implements Initializable {
 //                }
                 break;
             case D:
+                icetype=0;
                 if (map2[playerY][playerX + 1] == 0)
                     return;
                 if (map2[playerY][playerX + 1] == 2)
+                    return;
+                if (map2[playerY][playerX + 1] >= 6&& map2[playerY][playerX + 1] <= 9)
                     return;
 //                if(playerY.equals(GridPane.getRowIndex(fire)) &&playerX==GridPane.getColumnIndex(fire)-1&&fire.isVisible())//邊線
 //                    return;
                 if (map2[playerY][playerX + 1] == 3) {//碰到冰塊
                     if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3)
                         return;
-                    for (int i = playerX + 1; i <= mapWidth; i++) {
-                        if (map2[playerY][i] == 2) {
-                            map2[playerY][i] = 1;
-                            map2[playerY][i - 1] = 1;
-                            break;
-                        }
-                        if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX + 1) {//冰塊跟牆壁(還沒寫)
-                            map2[playerY][i - 1] = 3;
-                            break;
-                        }
-                        map2[playerY][i - 1] = 1;
-                        map2[playerY][i] = 3;
-                    }
+                    if (map2[playerY][playerX + 2] == 5)
+                        return;
+                    IceMove(4,3);
+                    icetype=3;
                 }
                 if (map2[playerY][playerX + 1] == 5) {//碰到冰塊
-                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3)
+                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 5)
                         return;
-                    for (int i = playerX + 1; i <= mapWidth; i++) {
-                        if (map2[playerY][i] == 2) {
-                            map2[playerY][i] = 1;
-                        }
-                        if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX + 1) {//冰塊跟牆壁(還沒寫)
-                            map2[playerY][i - 1] = 5;
-                            break;
-                        }
-                        map2[playerY][i - 1] = 1;
-                        map2[playerY][i] = 5;
-                    }
+                    if (map2[playerY][playerX + 2] == 5)
+                        return;
+                    IceMove(4,5);
+                    icetype=5;
                 }
                 map2[playerY][playerX + 1] = 4;
-                map2[playerY][playerX] = 1;
+                if(iceOnPlayer) {
+                    map2[playerY][playerX] = icetype;
+                    iceOnPlayer=false;
+                }
+                else {
+                    map2[playerY][playerX] = 1;
+                }
                 drawMap2();
 //                GridPane.setColumnIndex(player,playerX+1);
                 System.out.println("right");
@@ -392,8 +435,9 @@ public class Level1Controller implements Initializable {
             case R: //重新開始
                 for (int i = 1; i <= 9; i++){
                     for (int j = 1; j <= 9; j++){
-                        if (10 - j == i && i != j && j <= 8 && j >= 2){
-                            if (i == 8 && j == 2)
+                        map2[i][j]=map3[i][j];
+                        /*if (10 - j == i && i != j && j <= 8 && j >= 2){
+                        if (i == 8 && j == 2)
                                 map2[i][j] = 5;
                             else
                                 map2[i][j] = 3;
@@ -406,7 +450,7 @@ public class Level1Controller implements Initializable {
                         }
                         else {
                             map2[i][j] = 1;
-                        }
+                        }*/
                     }
                 }
                 drawMap2();
@@ -442,5 +486,362 @@ public class Level1Controller implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    private void ChangeDirect(int tempX,int tempY,int Direction,int IceType) {
+        switch (Direction){
+            case 9://左
+                map2[tempY][tempX]=9;
+                int temp=0;
+                boolean changeDirection=false;
+                for (int i = tempX; i >= 1; i--) {
+                    if (map2[tempY][i-1] == 2) {
+                        if(IceType==3) {
+                            map2[tempY][i] = 1;
+                            map2[tempY][i-1] = 1;
+                            break;
+                        }
+                        else {
+                            map2[tempY][i-1]=1;
+                        }
+                    }
+                    if ((map2[tempY][i-1] == 3 || map2[tempY][i-1] == 0) && i != tempX) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[tempY][i] = IceType;
+                        break;
+                    }
+                    if (map2[tempY][i-1] == 5 && i != tempX) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[tempY][i] = IceType;
+                        break;
+                    }
+                    if (map2[tempY][i-1] == 4 && map2[tempY][i-2]==3) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[tempY][i-1] == 4 && map2[tempY][i-2]==0) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[tempY][i-1] == 4 && map2[tempY][i-2]==5) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[tempY][i-1] == 4 &&map2[tempY][i-2]==2) {//冰塊跟牆壁(還沒寫)
+                        map2[tempY][i-2] = 1;
+                        break;
+                    }
+                    if(map2[tempY][i-1]>=6 && map2[tempY][i-1]<=9) {
+                        temp=i-1;
+                        changeDirection=true;
+                        break;
+                    }
+                }
+                if(changeDirection) {
+                    ChangeDirect(temp,tempY,map2[tempY][temp],IceType);
+                }
+
+                break;
+            case 6://上
+                map2[tempY][tempX]=6;
+                temp=0;
+                changeDirection=false;
+                for (int i = tempY; i >= 1; i--) {
+                    if (map2[i-1][tempX] == 2) {
+                        if(IceType==3) {
+                            map2[i][tempX] = 1;
+                            map2[i -1][tempX] = 1;
+                            break;
+                        }
+                        else {
+                            map2[i-1][tempX]=1;
+                        }
+                    }
+                    if ((map2[i-1][tempX] == 3 || map2[i-1][tempX] == 0) && i != tempY) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[i][tempX] = IceType;
+                        break;
+                    }
+                    if (map2[i-1][tempX] == 5 && i != tempY) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[i][tempX] = IceType;
+                        break;
+                    }
+                    if (map2[i-1][tempX] == 4 && map2[i-2][tempX] == 0) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[i-1][tempX] == 4 && map2[i-2][tempX] == 3) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[i-1][tempX] == 4 && map2[i-2][tempX] == 5) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[i-1][tempX] == 4 && map2[i-2][tempX] == 2) {//冰塊跟牆壁(還沒寫)
+                        map2[i-2][tempX] = 1;
+                        break;
+                    }
+                    if(map2[i-1][tempX]>=6 && map2[i-1][tempX] <=9) {
+                        temp=i-1;
+                        changeDirection=true;
+                        break;
+                    }
+                }
+                if(changeDirection) {
+                    ChangeDirect(tempX,temp,map2[temp][tempX],IceType);
+                }
+                break;
+            case 7://右
+                map2[tempY][tempX]=7;
+                temp=0;
+                changeDirection=false;
+                for (int i = tempX;i <= mapWidth; i++) {
+                    if (map2[tempY][i+1] == 2) {
+                        if(IceType==3) {
+                            map2[playerY][i] = 1;
+                            map2[playerY][i + 1] = 1;
+                            break;
+                        }
+                        else {
+                            map2[playerY][i+1] = 1;
+                        }
+                    }
+                    if ((map2[tempY][i+1] == 3 || map2[tempY][i+1] == 0) && i != tempX) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[tempY][i] = IceType;
+                        break;
+                    }
+                    if (map2[tempY][i+1] == 5 && i != tempX) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[tempY][i] = IceType;
+                        break;
+                    }
+                    if (map2[tempY][i+1] == 4 &&map2[tempY][i+2]==3) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[tempY][i+1] == 4 &&map2[tempY][i+2]==0) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[tempY][i+1] == 4 &&map2[tempY][i+2]==5) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[tempY][i+1] == 4 &&map2[tempY][i+2]==2) {//冰塊跟牆壁(還沒寫)
+                        map2[tempY][i+2] = 1;
+                        break;
+                    }
+                    if(map2[tempY][i+1]>=6 && map2[tempY][i+1]<=9) {
+                        temp=i+1;
+                        changeDirection=true;
+                        break;
+                    }
+                }
+                if(changeDirection) {
+                    ChangeDirect(temp,tempY,map2[tempY][temp],IceType);
+                }
+                break;
+            case 8://下
+                map2[tempY][tempX]=8;
+                temp=0;
+                changeDirection=false;
+                for (int i = tempY; i <= mapHeight; i++) {
+                    if (map2[i+1][tempX] == 2) {
+                        if(IceType==3) {
+                            map2[i][tempX] = 1;
+                            map2[i + 1][tempX] = 1;
+                            break;
+                        }
+                        else {
+                            map2[i+1][tempX] = 1;
+                        }
+                    }
+                    if ((map2[i+1][tempX] == 3 || map2[i+1][tempX] == 0) && i != tempY) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[i][tempX] = IceType;
+                        break;
+                    }
+                    if (map2[i+1][tempX] == 5 && i != tempY) {//冰塊跟牆壁(還沒寫)
+                        System.out.println("YES");
+                        map2[i][tempX] = IceType;
+                        break;
+                    }
+                    if (map2[i+1][tempX] == 4 &&map2[i+2][tempX]==3) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[i+1][tempX] == 4 &&map2[i+2][tempX]==0) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[i+1][tempX] == 4 &&map2[i+2][tempX]==5) {//冰塊跟牆壁(還沒寫)
+                        iceOnPlayer=true;
+                        break;
+                    }
+                    if (map2[i+1][tempX] == 4 &&map2[i+2][tempX]==2) {//冰塊跟牆壁(還沒寫)
+                        map2[i+2][tempX] = 1;
+                        break;
+                    }
+                    if(map2[i+1][tempX]>=6 && map2[i+1][tempX] <=9) {
+                        temp=i+1;
+                        changeDirection=true;
+                        break;
+                    }
+                }
+                if(changeDirection) {
+                    ChangeDirect(tempX,temp,map2[temp][tempX],IceType);
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
+    private void IceMove(int dir,int Icetype) {
+        switch (dir) {
+            case 1://w
+                int temp=0;
+                boolean changeDirection=false;
+                for(int i=playerY-1;i>=1;i--){
+                    if(map2[i][playerX]==2) {//冰塊碰到火
+                        if(Icetype==3) {
+                            map2[i][playerX] = 1;
+                            map2[i + 1][playerX] = 1;
+                            break;
+                        }
+                        else {
+                            map2[i][playerX]=1;
+                        }
+                    }
+
+                    if(map2[i][playerX]==5&&i!=playerY-1) {//黃金
+                        map2[i + 1][playerX] = Icetype;
+                        break;
+                    }
+                    if((map2[i][playerX]==3||map2[i][playerX]==0)&&i!=playerY-1){//冰塊跟牆壁
+                        map2[i+1][playerX]=Icetype;
+                        break;
+                    }
+                    if(map2[i][playerX]>=6 && map2[i][playerX]<=9) {
+                        temp=i;
+                        changeDirection=true;
+                        map2[i+1][playerX]=1;
+                        break;
+                    }
+                    map2[i+1][playerX]=1;
+                    map2[i][playerX]=Icetype;
+                }
+                if(changeDirection) {
+                    ChangeDirect(playerX,temp,map2[temp][playerX],Icetype);
+                }
+                break;
+            case 2://a
+                temp=0;
+                changeDirection=false;
+                for (int i = playerX - 1; i >= 1; i--) {
+                    if (map2[playerY][i] == 2) {
+                        if(Icetype==3) {
+                            map2[playerY][i] = 1;
+                            map2[playerY][i+1] = 1;
+                            break;
+                        }
+                        else {
+                            map2[playerY][i]=1;
+                        }
+                    }
+                    if(map2[playerY][i] == 5&& i != playerX - 1) {
+                        map2[playerY][i + 1] = Icetype;
+                    }
+                    if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX - 1) {//冰塊跟牆壁(還沒寫)
+                        map2[playerY][i + 1] = Icetype;
+                        break;
+                    }
+                    if(map2[playerY][i]>=6 &&map2[playerY][i]<=9) {
+                        temp=i;
+                        changeDirection=true;
+                        map2[playerY][i + 1] = 1;
+                        break;
+                    }
+                    map2[playerY][i + 1] = 1;
+                    map2[playerY][i] = Icetype;
+                }
+                if(changeDirection) {
+                    ChangeDirect(temp,playerY,map2[playerY][temp],Icetype);
+                }
+                break;
+            case 3://s
+                temp=0;
+                changeDirection=false;
+                for (int i = playerY + 1; i <= mapHeight; i++) {
+                    if (map2[i][playerX] == 2) {
+                        if(Icetype==3) {
+                            map2[i][playerX] = 1;
+                            map2[i - 1][playerX] = 1;
+                            break;
+                        }
+                        else {
+                            map2[i][playerX] = 1;
+                        }
+                    }
+                    if (map2[i][playerX] ==5 && i != playerY + 1) {//冰塊跟牆壁(還沒寫)
+                        map2[i - 1][playerX] = Icetype;
+                        break;
+                    }
+                    if ((map2[i][playerX] == 3 || map2[i][playerX] == 0) && i != playerY + 1) {//冰塊跟牆壁(還沒寫)
+                        map2[i - 1][playerX] = Icetype;
+                        break;
+                    }
+                    if(map2[i][playerX]>=6 && map2[i][playerX]<=9) {
+                        temp=i;
+                        changeDirection=true;
+                        map2[i - 1][playerX] = 1;
+                        break;
+                    }
+
+                    map2[i - 1][playerX] = 1;
+                    map2[i][playerX] = Icetype;
+                }
+                if(changeDirection) {
+                    ChangeDirect(playerX,temp,map2[temp][playerX],Icetype);
+                }
+                break;
+            case 4:
+                temp=0;
+                changeDirection=false;
+                for (int i = playerX + 1; i <= mapWidth; i++) {
+                    if (map2[playerY][i] == 2) {
+                        if(Icetype==3) {
+                            map2[playerY][i] = 1;
+                            map2[playerY][i - 1] = 1;
+                            break;
+                        }
+                        else {
+                            map2[playerY][i] = 1;
+                        }
+                    }
+                    if (map2[playerY][i] == 5 && i != playerX + 1) {
+                        map2[playerY][i - 1] = Icetype;
+                        break;
+                    }
+                    if ((map2[playerY][i] == 3 || map2[playerY][i] == 0) && i != playerX + 1) {
+                        map2[playerY][i - 1] = Icetype;
+                        break;
+                    }
+                    if(map2[playerY][i]>=6 &&map2[playerY][i]<=9) {
+                        temp=i;
+                        changeDirection=true;
+                        map2[playerY][i - 1] = 1;
+                        break;
+                    }
+                    map2[playerY][i - 1] = 1;
+                    map2[playerY][i] = Icetype;
+                }
+                if(changeDirection) {
+                    ChangeDirect(temp,playerY,map2[playerY][temp],Icetype);
+                }
+                break;
+        }
     }
 }
