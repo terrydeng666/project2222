@@ -465,9 +465,10 @@ public class Level1Controller implements Initializable {
                 for (int i = 1; i <= 9; i++){
                     for (int j = 1; j <= 9; j++){
                         map2[i][j]=map3[i][j];
+                        map[i][j]=map3[i][j];
                     }
                 }
-                drawMap2();
+                drawMap();
                 break;
             default:
                 break;
