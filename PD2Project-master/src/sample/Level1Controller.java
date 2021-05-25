@@ -721,7 +721,7 @@ public class Level1Controller implements Initializable {
                 boolean changeDirection=false;
                 iceY1 = playerY - 1;
                 iceX1 = playerX;
-                for(int i=playerY-1;i>=1;i--){
+                for(int i=playerY-1;i>=0;i--){
                     if(map2[i][playerX]==2) {//冰塊碰到火
                         if(Icetype==3) {
                             map2[i][playerX] = 1;
@@ -764,7 +764,7 @@ public class Level1Controller implements Initializable {
                 iceY1 = playerY;
                 iceX1 = playerX-1;
                 changeDirection=false;
-                for (int i = playerX - 1; i >= 1; i--) {
+                for (int i = playerX - 1; i >= 0; i--) {
                     if (map2[playerY][i] == 2) {
                         if(Icetype==3) {
                             map2[playerY][i] = 1;
