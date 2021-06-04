@@ -29,7 +29,7 @@ public class MenuController implements Initializable {
     private ImageView menu;
     @FXML
     private ImageView hotpot;
-
+    private Stage prevStage;
     private int y=1;
     //一個選項的單位
     public void selected(){
@@ -72,11 +72,92 @@ public class MenuController implements Initializable {
             stage.setTitle("Level 1");
             Level1Controller controller=loader.getController();
             controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
             stage.show();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void toLevel2() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level2.fxml"));
+            Parent root = loader.load();
+            Scene level2 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level2);
+            stage.setTitle("Level 2");
+            Level2Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel3() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level3.fxml"));
+            Parent root = loader.load();
+            Scene level3 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level3);
+            stage.setTitle("Level 3");
+            Level3Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel4() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level4.fxml"));
+            Parent root = loader.load();
+            Scene level4 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level4);
+            stage.setTitle("Level 4");
+            Level4Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel5() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level5.fxml"));
+            Parent root = loader.load();
+            Scene level5 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level5);
+            stage.setTitle("Level 5");
+            Level5Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void setPrevStage(Stage stage){
+        this.prevStage = stage;
     }
     @FXML
     private VBox menubox;
