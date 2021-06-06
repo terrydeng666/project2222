@@ -606,7 +606,7 @@ public class Level5Controller implements Initializable {
                                 map2[i][playerX] = 1;//fire->land
                                 map2[i+1][playerX] = 1;
                                 map2[playerY - 1][playerX] = 1;
-                                iceY2 = i + 1;
+                                iceY2 = i;
                                 iceX2 = playerX;
                                 break;
                             }
@@ -631,7 +631,7 @@ public class Level5Controller implements Initializable {
                                 map2[playerY][i+1] = 1;
                                 map2[playerY][playerX - 1] = 1;
                                 iceY2 = playerY;
-                                iceX2 = i + 1;
+                                iceX2 = i;
                                 break;
                             }
                             else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
@@ -655,7 +655,7 @@ public class Level5Controller implements Initializable {
                                 map2[i][playerX] = 1;//fire->land
                                 map2[i-1][playerX] = 1;
                                 map2[playerY + 1][playerX] = 1;
-                                iceY2 = i - 1;
+                                iceY2 = i;
                                 iceX2 = playerX;
                                 break;
                             }
@@ -681,7 +681,7 @@ public class Level5Controller implements Initializable {
                                 map2[playerY][i-1] = 1;
                                 map2[playerY][playerX + 1] = 1;
                                 iceY2 = playerY;
-                                iceX2 = i - 1;
+                                iceX2 = i;
                                 break;
                             }
                             else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁

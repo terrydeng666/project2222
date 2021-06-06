@@ -360,7 +360,7 @@ public class Level10Controller implements Initializable {
                                 firey=i;
                                 map2[i][playerX] = 1;
                                 map2[i+1][playerX] = 1;
-                                iceY2=i+1;
+                                iceY2=i;
                                 iceX2=playerX;
                                 fire=true;
                                 break;
@@ -386,7 +386,7 @@ public class Level10Controller implements Initializable {
                                 map2[playerY][i] = 1;
                                 map2[playerY][i+1] = 1;
                                 iceY2=playerY;
-                                iceX2=i+1;
+                                iceX2=i;
                                 fire=true;
                                 break;
                             } else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
@@ -410,7 +410,7 @@ public class Level10Controller implements Initializable {
                                 firex=playerX;
                                 map2[i][playerX] = 1;
                                 map2[i - 1][playerX] = 1;
-                                iceY2=i-1;
+                                iceY2=i;
                                 iceX2=playerX;
                                 fire=true;
                                 break;
@@ -435,7 +435,7 @@ public class Level10Controller implements Initializable {
                                 firey=playerY;
                                 map2[playerY][i] = 1;
                                 map2[playerY][i - 1] = 1;
-                                iceX2=i-1;
+                                iceX2=i;
                                 iceY2=playerY;
                                 fire=true;
                                 break;
