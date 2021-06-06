@@ -4,11 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import java.io.*;
+import java.util.Objects;
+
 public class Main extends Application {
     private String level="";
     @Override
@@ -19,6 +19,7 @@ public class Main extends Application {
         stage.setTitle("Asia God Tone Hot Pot");
         Scene menu = new Scene(root);
         menuController.setPrevStage(stage);
+
         //存檔
         try {
             BufferedReader br=new BufferedReader(new FileReader("PD2Project-master/src/sample/level.txt"));
@@ -52,20 +53,33 @@ public class Main extends Application {
                                 menuController.toLevel1();
                                 break;
                             case "2":
-                                System.out.println("level2");
                                 menuController.toLevel2();
                                 break;
                             case "3":
-                                System.out.println("level3");
                                 menuController.toLevel3();
                                 break;
                             case "4":
-                                System.out.println("level4");
                                 menuController.toLevel4();
                                 break;
                             case "5":
-                                System.out.println("level5");
                                 menuController.toLevel5();
+                                break;
+                            case "6":
+                                menuController.toLevel6();
+                                break;
+                            case "7":
+                                menuController.toLevel7();
+                                break;
+                            case "8":
+                                menuController.toLevel8();
+                                break;
+                            case "9":
+                                menuController.toLevel9();
+                                break;
+                            case "10":
+                                menuController.toLevel10();
+                                break;
+                            default:
                                 break;
                         }
                     }
@@ -75,9 +89,10 @@ public class Main extends Application {
                             Parent playRoot = instruction.load();
                             Scene howToPlayScene = new Scene(playRoot);
                             Stage howToPlayStage = new Stage();
+                            String css = Objects.requireNonNull(this.getClass().getResource("howToPlaycss.css")).toExternalForm();
                             howToPlayStage.setScene(howToPlayScene);
                             howToPlayStage.setTitle("How To Play");
-                            HowToPlayController howToPlayController = instruction.getController();
+                            howToPlayScene.getStylesheets().add(css);
                             howToPlayStage.show();
                         }catch(IOException e){
                             e.printStackTrace();

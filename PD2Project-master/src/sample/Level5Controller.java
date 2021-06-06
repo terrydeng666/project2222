@@ -3,8 +3,9 @@ package sample;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -25,7 +26,6 @@ public class Level5Controller implements Initializable {
     private GridPane gridpane;
     @FXML
     private Pane pane;
-    //TODO
     int[][] map = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -71,19 +71,12 @@ public class Level5Controller implements Initializable {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-
     private int playerX;
     private int playerY;
     public int direct;//1up 2left 3down 4right
-    public int iceX1, iceY1, iceX2, iceY2,firex=0,firey=0;
+    public int iceX1, iceY1, iceX2, iceY2;
     public Stage prevStage;
     private boolean gameOver=true;
-    private boolean restart =false;
-    private boolean playerRight=true;
-    private boolean fire=false;
-    private final int tube=50;
-
 
     public void drawMap() {
         for (int i = 0; i < map.length; i++) {//h
@@ -109,49 +102,18 @@ public class Level5Controller implements Initializable {
                         gridpane.getChildren().add(ice);
                         break;
                     case 4://player
-                        Image playerImage;
-                        if(playerRight) {
-                            playerImage=new Image(getClass().getResourceAsStream("/image/player.png"), tube, tube, false, false);
-                        }
-                        else {
-                            playerImage=new Image(getClass().getResourceAsStream("/image/playerLeft.png"), tube, tube, false, false);
-                        }
+                        Image playerImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/player.png")), tube, tube, false, false);
                         ImageView player = new ImageView(playerImage);
                         GridPane.setConstraints(player, j, i);
                         gridpane.getChildren().add(player);
                         playerY = i;
                         playerX = j;
-                        map[i][j] = map2[i][j];
                         break;
                     case 5:
                         Image goldIceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
                         ImageView goldIce = new ImageView(goldIceImage);
                         GridPane.setConstraints(goldIce, j, i);
                         gridpane.getChildren().add(goldIce);
-                        break;
-                    case 6:
-                        Image right = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowRight.png")), tube, tube, false, false);
-                        ImageView rightArrow = new ImageView(right);
-                        GridPane.setConstraints(rightArrow, j, i);
-                        gridpane.getChildren().add(rightArrow);
-                        break;
-                    case 7:
-                        Image left = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowLeft.png")), tube, tube, false, false);
-                        ImageView leftArrow = new ImageView(left);
-                        GridPane.setConstraints(leftArrow, j, i);
-                        gridpane.getChildren().add(leftArrow);
-                        break;
-                    case 8:
-                        Image up = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowUp.png")), tube, tube, false, false);
-                        ImageView upArrow = new ImageView(up);
-                        GridPane.setConstraints(upArrow, j, i);
-                        gridpane.getChildren().add(upArrow);
-                        break;
-                    case 9:
-                        Image down = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowDown.png")), tube, tube, false, false);
-                        ImageView downArrow = new ImageView(down);
-                        GridPane.setConstraints(downArrow, j, i);
-                        gridpane.getChildren().add(downArrow);
                         break;
                     case 0:
                         Image wallImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/wall.png")), tube, tube, false, false);
@@ -175,12 +137,7 @@ public class Level5Controller implements Initializable {
                 switch (map2[i][j]) {
                     case 1://road
                         if (map2[i][j] != map[i][j]) {
-                            if(i==firey && j==firex) {
-                                iceAnimation(3,i,j);
-                                firex=0;
-                                firey=0;
-                            }
-                            Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
+                            Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
                             ImageView land = new ImageView(landImage);
                             GridPane.setConstraints(land, j, i);
                             gridpane.getChildren().add(land);
@@ -199,29 +156,107 @@ public class Level5Controller implements Initializable {
                         break;
                     case 3://ice
                         if (map2[i][j] != map[i][j]) {
-                            if(restart) {
-                                Image iceImage = new Image(getClass().getResourceAsStream("/image/ice.png"), tube, tube, false, false);
-                                ImageView ice = new ImageView(iceImage);
-                                GridPane.setConstraints(ice, j, i);
-                                gridpane.getChildren().add(ice);
-                            }
-                            else {
-                                Image iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/ice.png")), tube, tube, false, false);
-                                ImageView ice = new ImageView(iceImage);
-                                iceAnimation(3,i,j);
+                            Image iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/ice.png")), tube, tube, false, false);
+                            ImageView ice = new ImageView(iceImage);
+                            switch (direct) {
+                                case 1: //ice up
+                                    int j1 = j;
+                                    int i1 = i;
+                                    pane.getChildren().add(ice);
+                                    ice.setX(iceX1 * tube);
+                                    ice.setY(iceY1 * tube);
+                                    int sleep = 10;//ms 停幾秒
+                                    Timeline t = new Timeline();
+                                    KeyFrame kf = new KeyFrame(Duration.millis(sleep), event -> {
+                                        ice.setY(ice.getY() - 10);
+                                        if (ice.getY() == tube * iceY2) {
+                                            pane.getChildren().remove(ice);
+                                            GridPane.setConstraints(ice, j1, i1);
+                                            gridpane.getChildren().add(ice);
+                                            t.pause();
+                                        }
+                                    });
+                                    t.getKeyFrames().add(kf);
+                                    t.setCycleCount(Timeline.INDEFINITE);
+                                    t.play();
+                                    break;
+                                case 2:
+                                    int j2 = j;
+                                    int i2 = i;
+
+                                    pane.getChildren().add(ice);
+                                    ice.setX(iceX1 * tube);
+                                    ice.setY(iceY1 * tube);
+                                    int sleep2 = 10;//ms 停幾秒
+                                    Timeline t2 = new Timeline();
+                                    KeyFrame kf2 = new KeyFrame(Duration.millis(sleep2), event -> {
+                                        ice.setX(ice.getX() - 10);
+                                        if (ice.getX() == tube * iceX2) {
+                                            pane.getChildren().remove(ice);
+                                            GridPane.setConstraints(ice, j2, i2);
+                                            gridpane.getChildren().add(ice);
+                                            t2.pause();
+                                        }
+                                    });
+                                    t2.getKeyFrames().add(kf2);
+                                    t2.setCycleCount(Timeline.INDEFINITE);
+                                    t2.play();
+                                    break;
+                                case 3:
+                                    int j3 = j;
+                                    int i3 = i;
+
+                                    pane.getChildren().add(ice);
+                                    ice.setX(iceX1 * tube);
+                                    ice.setY(iceY1 * tube);
+                                    int sleep3 = 10;//ms 停幾秒
+                                    Timeline t3 = new Timeline();
+                                    KeyFrame kf3 = new KeyFrame(Duration.millis(sleep3), event -> {
+                                        ice.setY(ice.getY() + 10);
+                                        if (ice.getY() == tube * iceY2) {
+                                            pane.getChildren().remove(ice);
+                                            GridPane.setConstraints(ice, j3, i3);
+                                            gridpane.getChildren().add(ice);
+                                            t3.pause();
+                                        }
+                                    });
+                                    t3.getKeyFrames().add(kf3);
+                                    t3.setCycleCount(Timeline.INDEFINITE);
+                                    t3.play();
+                                    break;
+                                case 4:
+                                    int j4 = j;
+                                    int i4 = i;
+
+                                    pane.getChildren().add(ice);
+                                    ice.setX(iceX1 * tube);
+                                    ice.setY(iceY1 * tube);
+                                    int sleep4 = 10;//ms 停幾秒
+                                    Timeline t4 = new Timeline();
+                                    KeyFrame kf4 = new KeyFrame(Duration.millis(sleep4), event -> {
+                                        ice.setX(ice.getX() + 10);
+                                        if (ice.getX() == tube * iceX2) {
+                                            pane.getChildren().remove(ice);
+                                            GridPane.setConstraints(ice, j4, i4);
+                                            gridpane.getChildren().add(ice);
+                                            t4.pause();
+                                        }
+                                    });
+                                    t4.getKeyFrames().add(kf4);
+                                    t4.setCycleCount(Timeline.INDEFINITE);
+                                    t4.play();
+                                    break;
+                                default:
+                                    GridPane.setConstraints(ice, j, i);
+                                    gridpane.getChildren().add(ice);
+                                    break;
                             }
                             map[i][j] = map2[i][j];
                         }
                         break;
                     case 4://player
                         if (map2[i][j] != map[i][j]) {
-                            Image playerImage;
-                            if(playerRight) {
-                                playerImage=new Image(getClass().getResourceAsStream("/image/player.png"), tube, tube, false, false);
-                            }
-                            else {
-                                playerImage=new Image(getClass().getResourceAsStream("/image/playerLeft.png"), tube, tube, false, false);
-                            }
+                            Image playerImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/player.png")), tube, tube, false, false);
                             ImageView player = new ImageView(playerImage);
                             GridPane.setConstraints(player, j, i);
                             gridpane.getChildren().add(player);
@@ -232,57 +267,104 @@ public class Level5Controller implements Initializable {
                         break;
                     case 5:
                         if (map2[i][j] != map[i][j]) {
-                            if(restart) {
-                                Image goldIceImage = new Image(getClass().getResourceAsStream("/image/Au.jpg"), tube, tube, false, false);
-                                ImageView goldIce = new ImageView(goldIceImage);
-                                GridPane.setConstraints(goldIce, j, i);
-                                gridpane.getChildren().add(goldIce);
+                            Image goldIceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
+                            ImageView goldIce = new ImageView(goldIceImage);
+                            switch (direct) {
+                                case 1: //ice up
+                                    int j1=j;
+                                    int i1=i;
 
-                            }
-                            else {
-                                Image goldIceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
-                                ImageView goldIce = new ImageView(goldIceImage);
-                                iceAnimation(5,i,j);
-                            }
-                            map[i][j] = map2[i][j];
-                        }
+                                    pane.getChildren().add(goldIce);
+                                    goldIce.setX(iceX1*tube);
+                                    goldIce.setY(iceY1*tube);
+                                    int sleep = 10;//ms 停幾秒
+                                    Timeline t = new Timeline();
+                                    KeyFrame kf = new KeyFrame(Duration.millis(sleep), event -> {
+                                        goldIce.setY(goldIce.getY() - 10);
+                                        if (goldIce.getY() == tube*iceY2){
+                                            pane.getChildren().remove(goldIce);
+                                            GridPane.setConstraints(goldIce, j1, i1);
+                                            gridpane.getChildren().add(goldIce);
+                                            t.pause();
+                                        }
+                                    });
+                                    t.getKeyFrames().add(kf);
+                                    t.setCycleCount(Timeline.INDEFINITE);
+                                    t.play();
+                                    break;
+                                case 2:
+                                    int j2=j;
+                                    int i2=i;
 
-                    case 6:
-                        if (map2[i][j] != map[i][j]){
-                            Image right = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowRight.png")), tube, tube, false, false);
-                            ImageView rightArrow = new ImageView(right);
-                            GridPane.setConstraints(rightArrow, j, i);
-                            gridpane.getChildren().add(rightArrow);
+                                    pane.getChildren().add(goldIce);
+                                    goldIce.setX(iceX1*tube);
+                                    goldIce.setY(iceY1*tube);
+                                    int sleep2 = 10;//ms 停幾秒
+                                    Timeline t2 = new Timeline();
+                                    KeyFrame kf2 = new KeyFrame(Duration.millis(sleep2), event -> {
+                                        goldIce.setX(goldIce.getX() - 10);
+                                        if (goldIce.getX() == tube*iceX2){
+                                            pane.getChildren().remove(goldIce);
+                                            GridPane.setConstraints(goldIce, j2, i2);
+                                            gridpane.getChildren().add(goldIce);
+                                            t2.pause();
+                                        }
+                                    });
+                                    t2.getKeyFrames().add(kf2);
+                                    t2.setCycleCount(Timeline.INDEFINITE);
+                                    t2.play();
+                                    break;
+                                case 3:
+                                    int j3=j;
+                                    int i3=i;
+
+                                    pane.getChildren().add(goldIce);
+                                    goldIce.setX(iceX1*tube);
+                                    goldIce.setY(iceY1*tube);
+                                    int sleep3 = 10;//ms 停幾秒
+                                    Timeline t3 = new Timeline();
+                                    KeyFrame kf3 = new KeyFrame(Duration.millis(sleep3), event -> {
+                                        goldIce.setY(goldIce.getY() + 10);
+                                        if (goldIce.getY() == tube*iceY2){
+                                            pane.getChildren().remove(goldIce);
+                                            GridPane.setConstraints(goldIce, j3, i3);
+                                            gridpane.getChildren().add(goldIce);
+                                            t3.pause();
+                                        }
+                                    });
+                                    t3.getKeyFrames().add(kf3);
+                                    t3.setCycleCount(Timeline.INDEFINITE);
+                                    t3.play();
+                                    break;
+                                case 4:
+                                    int j4=j;
+                                    int i4=i;
+
+                                    pane.getChildren().add(goldIce);
+                                    goldIce.setX(iceX1*tube);
+                                    goldIce.setY(iceY1*tube);
+                                    int sleep4 = 10;//ms 停幾秒
+                                    Timeline t4 = new Timeline();
+                                    KeyFrame kf4 = new KeyFrame(Duration.millis(sleep4), event -> {
+                                        goldIce.setX(goldIce.getX() + 10);
+                                        if (goldIce.getX() == tube*iceX2){
+                                            pane.getChildren().remove(goldIce);
+                                            GridPane.setConstraints(goldIce, j4, i4);
+                                            gridpane.getChildren().add(goldIce);
+                                            t4.pause();
+                                        }
+                                    });
+                                    t4.getKeyFrames().add(kf4);
+                                    t4.setCycleCount(Timeline.INDEFINITE);
+                                    t4.play();
+                                    break;
+                                default:
+                                    GridPane.setConstraints(goldIce, j, i);
+                                    gridpane.getChildren().add(goldIce);
+                                    break;
+                            }
                             map[i][j] = map2[i][j];
                         }
-                        break;
-                    case 7:
-                        if (map2[i][j] != map[i][j]){
-                            Image left = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowLeft.png")), tube, tube, false, false);
-                            ImageView leftArrow = new ImageView(left);
-                            GridPane.setConstraints(leftArrow, j, i);
-                            gridpane.getChildren().add(leftArrow);
-                            map[i][j] = map2[i][j];
-                        }
-                        break;
-                    case 8:
-                        if (map2[i][j] != map[i][j]){
-                            Image up = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowUp.png")), tube, tube, false, false);
-                            ImageView upArrow = new ImageView(up);
-                            GridPane.setConstraints(upArrow, j, i);
-                            gridpane.getChildren().add(upArrow);
-                            map[i][j] = map2[i][j];
-                        }
-                        break;
-                    case 9:
-                        if (map2[i][j] != map[i][j]){
-                            Image down = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowDown.png")), tube, tube, false, false);
-                            ImageView downArrow= new ImageView(down);
-                            GridPane.setConstraints(downArrow, j, i);
-                            gridpane.getChildren().add(downArrow);
-                            map[i][j] = map2[i][j];
-                        }
-                        break;
                     case 0:
                         if (map2[i][j] != map[i][j]) {
                             Image wallImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/wall.png")), tube, tube, false, false);
@@ -306,14 +388,15 @@ public class Level5Controller implements Initializable {
                 playerMove(direct);
                 drawMap2();
                 if(gameOver)
+                    toLevel6();
                 gameOver=true;
                 break;
             case A:
                 direct = 2;
-                playerRight=false;
                 playerMove(direct);
                 drawMap2();
                 if(gameOver)
+                    toLevel6();
                 gameOver=true;
                 break;
             case S:
@@ -321,26 +404,78 @@ public class Level5Controller implements Initializable {
                 playerMove(direct);
                 drawMap2();
                 if(gameOver)
+                    toLevel6();
                 gameOver=true;
                 break;
             case D:
                 direct = 4;
-                playerRight=true;
                 playerMove(direct);
                 drawMap2();
                 if(gameOver)
+                    toLevel6();
                 gameOver=true;
                 break;
             case R: //重新開始
-                restart=true;
-                for (int i = 0; i < map.length; i++) {
-                    for (int j = 0; j < map[0].length; j++) {
-                        map2[i][j] = map3[i][j];
+                for (int i = 0; i < map3.length; i++) {//h
+                    for (int j = 0; j < map3[0].length; j++) {//w
+                        int tube = 50;
+                        if (map3[i][j] != map[i][j])
+                            switch (map3[i][j]) {
+                                case 1://road
+                                    Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
+                                    ImageView land = new ImageView(landImage);
+                                    GridPane.setConstraints(land, j, i);
+                                    gridpane.getChildren().add(land);
+                                    map[i][j]=map3[i][j];
+                                    map2[i][j]=map3[i][j];
+                                    break;
+                                case 2://fire
+                                    Image fireImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/fire.png")), tube, tube, false, false);
+                                    ImageView fire = new ImageView(fireImage);
+                                    GridPane.setConstraints(fire, j, i);
+                                    gridpane.getChildren().add(fire);
+                                    map[i][j]=map3[i][j];
+                                    map2[i][j]=map3[i][j];
+                                    break;
+                                case 3://ice
+                                    Image iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/ice.png")), tube, tube, false, false);
+                                    ImageView ice = new ImageView(iceImage);
+                                    GridPane.setConstraints(ice, j, i);
+                                    gridpane.getChildren().add(ice);
+                                    map[i][j]=map3[i][j];
+                                    map2[i][j]=map3[i][j];
+                                    break;
+                                case 4://player
+                                    Image playerImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/player.png")), tube, tube, false, false);
+                                    ImageView player = new ImageView(playerImage);
+                                    GridPane.setConstraints(player, j, i);
+                                    gridpane.getChildren().add(player);
+                                    playerY = i;
+                                    playerX = j;
+                                    map[i][j]=map3[i][j];
+                                    map2[i][j]=map3[i][j];
+                                    break;
+                                case 5:
+                                    Image goldIceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
+                                    ImageView goldIce = new ImageView(goldIceImage);
+                                    GridPane.setConstraints(goldIce, j, i);
+                                    gridpane.getChildren().add(goldIce);
+                                    map[i][j]=map3[i][j];
+                                    map2[i][j]=map3[i][j];
+                                    break;
+                                case 0:
+                                    Image wallImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/wall.png")), tube, tube, false, false);
+                                    ImageView wall = new ImageView(wallImage);
+                                    GridPane.setConstraints(wall, j, i);
+                                    gridpane.getChildren().add(wall);
+                                    map[i][j]=map3[i][j];
+                                    map2[i][j]=map3[i][j];
+                                    break;
+                                default:
+                                    break;
+                            }
                     }
                 }
-                drawMap2();
-                restart=false;
-                break;
             default:
                 break;
         }
@@ -354,14 +489,15 @@ public class Level5Controller implements Initializable {
     }
 
 
+
     private void SetLevel() {
         try {
             BufferedReader br = new BufferedReader(new FileReader("PD2Project-master/src/sample/level.txt"));
-            StringBuffer ib = new StringBuffer();
+            StringBuilder ib = new StringBuilder();
             String s;
 
-            while ((s = br.readLine()) != null) {
-                s = "5";
+            while (br.readLine() != null) {
+                s="5";
                 ib.append(s);
             }
             br.close();
@@ -375,7 +511,6 @@ public class Level5Controller implements Initializable {
         }
     }
 
-
     public void playerMove(int dir){
         switch (dir){
             case 1: //Go up
@@ -384,7 +519,7 @@ public class Level5Controller implements Initializable {
                 if (map2[playerY - 1][playerX] == 2)//碰到火
                     return;
                 if (map2[playerY - 1][playerX] == 3) {//碰到冰塊
-                    if (map2[playerY - 2][playerX] == 0 || map2[playerY - 2][playerX] == 3 || map2[playerY - 2][playerX] == 5 || map2[playerY - 2][playerX] == 9)
+                    if (map2[playerY - 2][playerX] == 0 || map2[playerY - 2][playerX] == 3 || map2[playerY - 2][playerX] == 5)
                         return;
                     iceMove(1, 3);
                 }
@@ -392,47 +527,6 @@ public class Level5Controller implements Initializable {
                     if (map2[playerY - 2][playerX] == 0 || map2[playerY - 2][playerX] == 3 || map2[playerY - 2][playerX] == 5)
                         return;
                     iceMove(1, 5);
-                }
-                if (map2[playerY - 1][playerX] == 6){
-                    if (map2[playerY-1][playerX+1] == 3 ||map2[playerY-1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY-1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerY--;
-                    playerX++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX-1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY-1][playerX] == 7){
-                    if (map2[playerY-1][playerX-1] == 3 || map2[playerY-1][playerX-1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY-1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerY--;
-                    playerX--;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX+1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY-1][playerX] == 8){
-                    if (map2[playerY-2][playerX] == 3 || map2[playerY-2][playerX] == 5){
-                        map2[playerY-1][playerX] = 4;
-                        map2[playerY][playerX] = 1;
-                        drawMap2();
-                        break;
-                    }
-                    playerY--;
-                    map2[playerY+1][playerX] = 1;
-                }
-                if (map2[playerY-1][playerX] == 9){
-                    return;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY-1][playerX] = 4;
@@ -444,7 +538,7 @@ public class Level5Controller implements Initializable {
                 if (map2[playerY][playerX - 1] == 2)//碰到火
                     return;
                 if (map2[playerY][playerX - 1] == 3) {//碰到冰塊
-                    if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3 || map2[playerY][playerX - 2] == 5 || map2[playerY][playerX - 2] == 6)
+                    if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3 || map2[playerY][playerX - 2] == 5)
                         return;
                     iceMove(2, 3);
                 }
@@ -452,47 +546,6 @@ public class Level5Controller implements Initializable {
                     if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3 || map2[playerY][playerX - 2] == 5)
                         return;
                     iceMove(2, 5);
-                }
-                if (map2[playerY][playerX-1] == 6) {
-                    return;
-                }
-                if (map2[playerY][playerX-1] == 7) {
-                    if (map2[playerY][playerX-2] == 3 || map2[playerY][playerX-2] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX - 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    map2[playerY][playerX+1] = 1;
-                }
-                if (map2[playerY][playerX-1] == 8){
-                    if (map2[playerY-1][playerX-1] == 3 || map2[playerY-1][playerX-1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX - 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    playerY--;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX+1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY][playerX-1] == 9){
-                    if (map2[playerY+1][playerX-1] == 3 || map2[playerY+1][playerX-1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX - 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    playerY++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY-1][playerX+1] = 1;
-                    drawMap2();
-                    break;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY][playerX - 1] = 4;
@@ -504,7 +557,7 @@ public class Level5Controller implements Initializable {
                 if (map2[playerY + 1][playerX] == 2)
                     return;
                 if (map2[playerY + 1][playerX] == 3) {
-                    if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5 || map2[playerY + 2][playerX] == 8)
+                    if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5)
                         return;
                     iceMove(3, 3);
                 }
@@ -512,47 +565,6 @@ public class Level5Controller implements Initializable {
                     if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5)
                         return;
                     iceMove(3, 5);
-                }
-                if (map2[playerY + 1][playerX] == 6){
-                    if (map2[playerY+1][playerX+1] == 3 || map2[playerY+1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY + 1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX++;
-                    playerY++;
-                    map2[playerY - 1][playerX - 1] = 1;
-                    map2[playerY][playerX] = 4;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY + 1][playerX] == 7){
-                    if (map2[playerY + 1][playerX - 1] == 3 || map2[playerY + 1][playerX - 1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY + 1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    playerY++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY-1][playerX+1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY + 1][playerX] == 8){
-                    return;
-                }
-                if (map2[playerY + 1][playerX] == 9){
-                    if (map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY + 1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerY++;
-                    map2[playerY-1][playerX] = 1;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY + 1][playerX] = 4;
@@ -564,7 +576,7 @@ public class Level5Controller implements Initializable {
                 if (map2[playerY][playerX + 1] == 2)
                     return;
                 if (map2[playerY][playerX + 1] == 3) {//碰到冰塊
-                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3 || map2[playerY][playerX + 2] == 5 || map2[playerY][playerX + 2] == 7)
+                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3 || map2[playerY][playerX + 2] == 5)
                         return;
                     iceMove(4, 3);
                 }
@@ -572,47 +584,6 @@ public class Level5Controller implements Initializable {
                     if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3 || map2[playerY][playerX + 2] == 5)
                         return;
                     iceMove(4, 5);
-                }
-                if (map2[playerY][playerX+1] == 6){
-                    if (map2[playerY][playerX+2] == 3 || map2[playerY][playerX+2] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX + 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX += 1;
-                    map2[playerY][playerX-1] = 1;
-                }
-                if (map2[playerY][playerX+1] == 7){
-                    return;
-                }
-                if (map2[playerY][playerX+1] == 8){
-                    if (map2[playerY-1][playerX+1] == 3 || map2[playerY-1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX + 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX++;
-                    playerY--;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX-1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY][playerX+1] == 9){
-                    if (map2[playerY+1][playerX+1] == 3 || map2[playerY+1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX + 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX++;
-                    playerY++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY-1][playerX-1] = 1;
-                    drawMap2();
-                    break;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY][playerX + 1] = 4;
@@ -623,10 +594,6 @@ public class Level5Controller implements Initializable {
         }
     }
 
-
-
-
-
     public void iceMove(int dir, int type){
         switch (type){
             case 3:
@@ -636,13 +603,11 @@ public class Level5Controller implements Initializable {
                         iceX1 = playerX;
                         for (int i = playerY - 2; i >= 0; i--) {
                             if (map2[i][playerX] == 2) {//碰到火
-                                firex=playerX;
-                                firey=i;
-                                map2[i][playerX] = 1;
+                                map2[i][playerX] = 1;//fire->land
                                 map2[i+1][playerX] = 1;
-                                iceY2=i+1;
-                                iceX2=playerX;
-                                fire=true;
+                                map2[playerY - 1][playerX] = 1;
+                                iceY2 = i + 1;
+                                iceX2 = playerX;
                                 break;
                             }
                             else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
@@ -662,13 +627,11 @@ public class Level5Controller implements Initializable {
                         iceX1 = playerX - 1;
                         for (int i = playerX - 2; i >= 0; i--) {
                             if (map2[playerY][i] == 2) {//碰到火
-                                firex=i;
-                                firey=playerY;
-                                map2[playerY][i] = 1;
+                                map2[playerY][i] = 1;//fire->land
                                 map2[playerY][i+1] = 1;
-                                iceY2=playerY;
-                                iceX2=i+1;
-                                fire=true;
+                                map2[playerY][playerX - 1] = 1;
+                                iceY2 = playerY;
+                                iceX2 = i + 1;
                                 break;
                             }
                             else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
@@ -689,13 +652,11 @@ public class Level5Controller implements Initializable {
                         iceX1 = playerX;
                         for (int i = playerY + 2;; i++) {
                             if (map2[i][playerX] == 2) {//碰到火
-                                firey=i;
-                                firex=playerX;
-                                map2[i][playerX] = 1;
-                                map2[i - 1][playerX] = 1;
-                                iceY2=i-1;
-                                iceX2=playerX;
-                                fire=true;
+                                map2[i][playerX] = 1;//fire->land
+                                map2[i-1][playerX] = 1;
+                                map2[playerY + 1][playerX] = 1;
+                                iceY2 = i - 1;
+                                iceX2 = playerX;
                                 break;
                             }
                             else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
@@ -703,11 +664,6 @@ public class Level5Controller implements Initializable {
                                 map2[playerY + 1][playerX] = 1;
                                 iceY2 = i - 1;
                                 iceX2 = playerX;
-                                break;
-                            }
-                            else if (map2[i][playerX] == 6){
-                                //TODO
-
                                 break;
                             }
                             else {
@@ -721,13 +677,11 @@ public class Level5Controller implements Initializable {
                         iceX1 = playerX + 1;
                         for (int i = playerX + 2;; i++) {
                             if (map2[playerY][i] == 2) {//碰到火
-                                firex=i;
-                                firey=playerY;
-                                map2[playerY][i] = 1;
-                                map2[playerY][i - 1] = 1;
-                                iceX2=i-1;
-                                iceY2=playerY;
-                                fire=true;
+                                map2[playerY][i] = 1;//fire->land
+                                map2[playerY][i-1] = 1;
+                                map2[playerY][playerX + 1] = 1;
+                                iceY2 = playerY;
+                                iceX2 = i - 1;
                                 break;
                             }
                             else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
@@ -836,158 +790,24 @@ public class Level5Controller implements Initializable {
                 break;
         }
     }
-
-    private void iceAnimation(int iceType ,int i,int j) {
-        Image iceImage;
-        ImageView ice;
-        if (iceType == 3) {
-            iceImage = new Image(getClass().getResourceAsStream("/image/ice.png"), tube, tube, false, false);
-            ice = new ImageView(iceImage);
-        } else {
-            iceImage = new Image(getClass().getResourceAsStream("/image/Au.jpg"), tube, tube, false, false);
-            ice = new ImageView(iceImage);
+    public void toLevel6() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level6.fxml"));
+            Parent root = loader.load();
+            Scene level6 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level6);
+            stage.setTitle("Level 6");
+            Level6Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
         }
-        switch (direct) {
-            case 1: //ice up
-                pane.getChildren().add(ice);
-                ice.setX(iceX1 * tube);
-                ice.setY(iceY1 * tube);
-                int sleep = 10;//ms 停幾秒
-                Timeline t = new Timeline();
-                KeyFrame kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        ice.setY(ice.getY() - 10);
-                        if (ice.getY() == tube * iceY2) {
-                            pane.getChildren().remove(ice);
-                            GridPane.setConstraints(ice, j, i);
-                            gridpane.getChildren().add(ice);
-                            t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
-                                ImageView land = new ImageView(landImage);
-                                GridPane.setConstraints(land, j, i);
-                                gridpane.getChildren().add(land);
-                                fire=false;
-                            }
-                        }
-                    }
-                });
-
-                t.getKeyFrames().add(kf);
-                t.setCycleCount(Timeline.INDEFINITE);
-                t.play();
-
-                break;
-            case 3:
-                pane.getChildren().add(ice);
-                ice.setX(iceX1 * tube);
-                ice.setY(iceY1 * tube);
-                sleep = 10;//ms 停幾秒
-                t = new Timeline();
-                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        ice.setY(ice.getY() + 10);
-                        if (ice.getY() == tube * iceY2) {
-                            pane.getChildren().remove(ice);
-                            GridPane.setConstraints(ice, j, i);
-                            gridpane.getChildren().add(ice);
-                            t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
-                                ImageView land = new ImageView(landImage);
-                                GridPane.setConstraints(land, j, i);
-                                gridpane.getChildren().add(land);
-                                fire=false;
-                            }
-                        }
-                    }
-                });
-                t.getKeyFrames().add(kf);
-                t.setCycleCount(Timeline.INDEFINITE);
-                t.play();
-                break;
-            case 2:
-                pane.getChildren().add(ice);
-                ice.setX(iceX1 * tube);
-                ice.setY(iceY1 * tube);
-                sleep = 10;//ms 停幾秒
-                t = new Timeline();
-                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        ice.setX(ice.getX() - 10);
-                        if (ice.getX() == tube * iceX2) {
-                            pane.getChildren().remove(ice);
-                            GridPane.setConstraints(ice, j, i);
-                            gridpane.getChildren().add(ice);
-                            t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
-                                ImageView land = new ImageView(landImage);
-                                GridPane.setConstraints(land, j, i);
-                                gridpane.getChildren().add(land);
-                                fire=false;
-                            }
-                        }
-                    }
-                });
-                t.getKeyFrames().add(kf);
-                t.setCycleCount(Timeline.INDEFINITE);
-                t.play();
-                break;
-            case 4:
-                pane.getChildren().add(ice);
-                ice.setX(iceX1 * tube);
-                ice.setY(iceY1 * tube);
-                sleep = 10;//ms 停幾秒
-                t = new Timeline();
-                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        ice.setX(ice.getX() + 10);
-                        if (ice.getX() == tube * iceX2) {
-                            pane.getChildren().remove(ice);
-                            GridPane.setConstraints(ice, j, i);
-                            gridpane.getChildren().add(ice);
-                            t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
-                                ImageView land = new ImageView(landImage);
-                                GridPane.setConstraints(land, j, i);
-                                gridpane.getChildren().add(land);
-                                fire=false;
-                            }
-                        }
-                    }
-                });
-                t.getKeyFrames().add(kf);
-                t.setCycleCount(Timeline.INDEFINITE);
-                t.play();
-                break;
-
+        catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
-
-    //    public void toMenu() {
-//        try {
-//            //產生level1的scene
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
-//            Parent root = loader.load();
-//            Scene menu = new Scene(root);
-//            Stage stage = new Stage();
-//            stage.setScene(menu);
-//            stage.setTitle("Menu");
-//            MenuController controller=loader.getController();
-//            prevStage.close();
-//            stage.show();
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
     public void setPrevStage(Stage stage) {
         this.prevStage = stage;
     }

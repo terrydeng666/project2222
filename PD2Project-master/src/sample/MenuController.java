@@ -13,9 +13,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -147,6 +149,101 @@ public class MenuController implements Initializable {
             stage.setScene(level5);
             stage.setTitle("Level 5");
             Level5Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel6() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level6.fxml"));
+            Parent root = loader.load();
+            Scene level6 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level6);
+            stage.setTitle("Level 6");
+            Level6Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel7() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level7.fxml"));
+            Parent root = loader.load();
+            Scene level7 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level7);
+            stage.setTitle("Level 7");
+            Level7Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel8() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level8.fxml"));
+            Parent root = loader.load();
+            Scene level8 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level8);
+            stage.setTitle("Level 8");
+            Level8Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel9() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level9.fxml"));
+            Parent root = loader.load();
+            Scene level9 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level9);
+            stage.setTitle("Level 9");
+            Level9Controller controller=loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void toLevel10() {
+        try {
+            //產生level1的scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level10.fxml"));
+            Parent root = loader.load();
+            Scene level10 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level10);
+            stage.setTitle("Level 10");
+            Level10Controller controller=loader.getController();
             controller.drawMap();
             prevStage.close();
             controller.setPrevStage(stage);

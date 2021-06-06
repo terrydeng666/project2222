@@ -20,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.*;
 
 public class Level1Controller implements Initializable {
@@ -29,11 +28,10 @@ public class Level1Controller implements Initializable {
     private GridPane gridpane;
     @FXML
     private Pane pane;
-    //TODO
     int[][] map = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 2, 1, 1, 1, 1, 1, 3, 1, 0},
+            {0, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0},
             {0, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0},
             {0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 0},
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
@@ -45,7 +43,7 @@ public class Level1Controller implements Initializable {
     int[][] map2 = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 2, 1, 1, 1, 1, 1, 3, 1, 0},
+            {0, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0},
             {0, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0},
             {0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 0},
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
@@ -57,7 +55,7 @@ public class Level1Controller implements Initializable {
     int[][] map3 = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 2, 1, 1, 1, 1, 1, 3, 1, 0},
+            {0, 1, 1, 1, 1, 1, 1, 1, 3, 1, 0},
             {0, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0},
             {0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 0},
             {0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0},
@@ -66,19 +64,17 @@ public class Level1Controller implements Initializable {
             {0, 1, 3, 1, 4, 1, 1, 1, 1, 1, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
     private int playerX;
     private int playerY;
     public int direct;//1up 2left 3down 4right
     public int iceX1, iceY1, iceX2, iceY2,firex=0,firey=0;
     public Stage prevStage;
-    private boolean gameOver=true;
-    private boolean restart =false;
+    private boolean gameOver = true;
     private boolean playerRight=true;
     private boolean fire=false;
+    private boolean restart =false;
     private final int tube=50;
-
-
-
 
     public void drawMap() {
         for (int i = 0; i < map.length; i++) {//h
@@ -106,10 +102,10 @@ public class Level1Controller implements Initializable {
                     case 4://player
                         Image playerImage;
                         if(playerRight) {
-                            playerImage=new Image(getClass().getResourceAsStream("/image/player.png"), tube, tube, false, false);
+                            playerImage=new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/player.png")), tube, tube, false, false);
                         }
                         else {
-                            playerImage=new Image(getClass().getResourceAsStream("/image/playerLeft.png"), tube, tube, false, false);
+                            playerImage=new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/playerLeft.png")), tube, tube, false, false);
                         }
                         ImageView player = new ImageView(playerImage);
                         GridPane.setConstraints(player, j, i);
@@ -123,30 +119,6 @@ public class Level1Controller implements Initializable {
                         ImageView goldIce = new ImageView(goldIceImage);
                         GridPane.setConstraints(goldIce, j, i);
                         gridpane.getChildren().add(goldIce);
-                        break;
-                    case 6:
-                        Image right = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowRight.png")), tube, tube, false, false);
-                        ImageView rightArrow = new ImageView(right);
-                        GridPane.setConstraints(rightArrow, j, i);
-                        gridpane.getChildren().add(rightArrow);
-                        break;
-                    case 7:
-                        Image left = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowLeft.png")), tube, tube, false, false);
-                        ImageView leftArrow = new ImageView(left);
-                        GridPane.setConstraints(leftArrow, j, i);
-                        gridpane.getChildren().add(leftArrow);
-                        break;
-                    case 8:
-                        Image up = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowUp.png")), tube, tube, false, false);
-                        ImageView upArrow = new ImageView(up);
-                        GridPane.setConstraints(upArrow, j, i);
-                        gridpane.getChildren().add(upArrow);
-                        break;
-                    case 9:
-                        Image down = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowDown.png")), tube, tube, false, false);
-                        ImageView downArrow = new ImageView(down);
-                        GridPane.setConstraints(downArrow, j, i);
-                        gridpane.getChildren().add(downArrow);
                         break;
                     case 0:
                         Image wallImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/wall.png")), tube, tube, false, false);
@@ -162,7 +134,6 @@ public class Level1Controller implements Initializable {
     }
 
 
-
     public void drawMap2() {
         for (int i = 0; i < map2.length; i++) {//h
             for (int j = 0; j < map2[0].length; j++) {//w
@@ -175,7 +146,7 @@ public class Level1Controller implements Initializable {
                                 firex=0;
                                 firey=0;
                             }
-                            Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
+                            Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
                             ImageView land = new ImageView(landImage);
                             GridPane.setConstraints(land, j, i);
                             gridpane.getChildren().add(land);
@@ -183,7 +154,7 @@ public class Level1Controller implements Initializable {
                         }
                         break;
                     case 2://fire
-                        gameOver=false;
+                        gameOver = false;
                         if (map2[i][j] != map[i][j]) {
                             Image fireImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/fire.png")), tube, tube, false, false);
                             ImageView fire = new ImageView(fireImage);
@@ -195,14 +166,12 @@ public class Level1Controller implements Initializable {
                     case 3://ice
                         if (map2[i][j] != map[i][j]) {
                             if(restart) {
-                                Image iceImage = new Image(getClass().getResourceAsStream("/image/ice.png"), tube, tube, false, false);
+                                Image iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/ice.png")), tube, tube, false, false);
                                 ImageView ice = new ImageView(iceImage);
                                 GridPane.setConstraints(ice, j, i);
                                 gridpane.getChildren().add(ice);
                             }
                             else {
-                                Image iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/ice.png")), tube, tube, false, false);
-                                ImageView ice = new ImageView(iceImage);
                                 iceAnimation(3,i,j);
                             }
                             map[i][j] = map2[i][j];
@@ -212,10 +181,10 @@ public class Level1Controller implements Initializable {
                         if (map2[i][j] != map[i][j]) {
                             Image playerImage;
                             if(playerRight) {
-                                playerImage=new Image(getClass().getResourceAsStream("/image/player.png"), tube, tube, false, false);
+                                playerImage=new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/player.png")), tube, tube, false, false);
                             }
                             else {
-                                playerImage=new Image(getClass().getResourceAsStream("/image/playerLeft.png"), tube, tube, false, false);
+                                playerImage=new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/playerLeft.png")), tube, tube, false, false);
                             }
                             ImageView player = new ImageView(playerImage);
                             GridPane.setConstraints(player, j, i);
@@ -228,53 +197,15 @@ public class Level1Controller implements Initializable {
                     case 5:
                         if (map2[i][j] != map[i][j]) {
                             if(restart) {
-                                Image goldIceImage = new Image(getClass().getResourceAsStream("/image/Au.jpg"), tube, tube, false, false);
+                                Image goldIceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
                                 ImageView goldIce = new ImageView(goldIceImage);
                                 GridPane.setConstraints(goldIce, j, i);
                                 gridpane.getChildren().add(goldIce);
 
                             }
                             else {
-                                Image goldIceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
-                                ImageView goldIce = new ImageView(goldIceImage);
                                 iceAnimation(5,i,j);
                             }
-                            map[i][j] = map2[i][j];
-                        }
-
-                    case 6:
-                        if (map2[i][j] != map[i][j]){
-                            Image right = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowRight.png")), tube, tube, false, false);
-                            ImageView rightArrow = new ImageView(right);
-                            GridPane.setConstraints(rightArrow, j, i);
-                            gridpane.getChildren().add(rightArrow);
-                            map[i][j] = map2[i][j];
-                        }
-                        break;
-                    case 7:
-                        if (map2[i][j] != map[i][j]){
-                            Image left = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowLeft.png")), tube, tube, false, false);
-                            ImageView leftArrow = new ImageView(left);
-                            GridPane.setConstraints(leftArrow, j, i);
-                            gridpane.getChildren().add(leftArrow);
-                            map[i][j] = map2[i][j];
-                        }
-                        break;
-                    case 8:
-                        if (map2[i][j] != map[i][j]){
-                            Image up = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowUp.png")), tube, tube, false, false);
-                            ImageView upArrow = new ImageView(up);
-                            GridPane.setConstraints(upArrow, j, i);
-                            gridpane.getChildren().add(upArrow);
-                            map[i][j] = map2[i][j];
-                        }
-                        break;
-                    case 9:
-                        if (map2[i][j] != map[i][j]){
-                            Image down = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/arrowDown.png")), tube, tube, false, false);
-                            ImageView downArrow= new ImageView(down);
-                            GridPane.setConstraints(downArrow, j, i);
-                            gridpane.getChildren().add(downArrow);
                             map[i][j] = map2[i][j];
                         }
                         break;
@@ -293,6 +224,7 @@ public class Level1Controller implements Initializable {
             }
         }
     }
+
     @FXML
     void keyPressed(KeyEvent event) throws IOException {
         switch (event.getCode()) {
@@ -300,42 +232,40 @@ public class Level1Controller implements Initializable {
                 direct = 1;
                 playerMove(direct);
                 drawMap2();
-                if(gameOver)
+                if (gameOver)
                     toLevel2();
-                gameOver=true;
+                gameOver = true;
                 break;
             case A:
                 direct = 2;
                 playerRight=false;
                 playerMove(direct);
                 drawMap2();
-                if(gameOver)
+                if (gameOver)
                     toLevel2();
-                gameOver=true;
+                gameOver = true;
                 break;
             case S:
                 direct = 3;
                 playerMove(direct);
                 drawMap2();
-                if(gameOver)
+                if (gameOver)
                     toLevel2();
-                gameOver=true;
+                gameOver = true;
                 break;
             case D:
                 direct = 4;
                 playerRight=true;
                 playerMove(direct);
                 drawMap2();
-                if(gameOver)
+                if (gameOver)
                     toLevel2();
-                gameOver=true;
+                gameOver = true;
                 break;
             case R: //重新開始
                 restart=true;
                 for (int i = 0; i < map.length; i++) {
-                    for (int j = 0; j < map[0].length; j++) {
-                        map2[i][j] = map3[i][j];
-                    }
+                    System.arraycopy(map3[i], 0, map2[i], 0, map[0].length);
                 }
                 drawMap2();
                 restart=false;
@@ -344,51 +274,15 @@ public class Level1Controller implements Initializable {
                 break;
         }
     }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        SetLevel();
-
-    }
-
-
-
-    private void SetLevel() {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("PD2Project-master/src/sample/level.txt"));
-            StringBuilder ib = new StringBuilder();
-            String s;
-
-            while (br.readLine() != null) {
-                s="1";
-                ib.append(s);
-            }
-            br.close();
-
-            FileOutputStream fo = new FileOutputStream("PD2Project-master/src/sample/level.txt");
-            fo.write(ib.toString().getBytes());
-            fo.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-    //TODO
-    public void playerMove(int dir){
-        switch (dir){
+    public void playerMove(int dir) {
+        switch (dir) {
             case 1: //Go up
                 if (map2[playerY - 1][playerX] == 0)//底線
                     return;
                 if (map2[playerY - 1][playerX] == 2)//碰到火
                     return;
                 if (map2[playerY - 1][playerX] == 3) {//碰到冰塊
-                    if (map2[playerY - 2][playerX] == 0 || map2[playerY - 2][playerX] == 3 || map2[playerY - 2][playerX] == 5 || map2[playerY - 2][playerX] == 9)
+                    if (map2[playerY - 2][playerX] == 0 || map2[playerY - 2][playerX] == 3 || map2[playerY - 2][playerX] == 5)
                         return;
                     iceMove(1, 3);
                 }
@@ -397,49 +291,8 @@ public class Level1Controller implements Initializable {
                         return;
                     iceMove(1, 5);
                 }
-                if (map2[playerY - 1][playerX] == 6){
-                    if (map2[playerY-1][playerX+1] == 3 ||map2[playerY-1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY-1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerY--;
-                    playerX++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX-1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY-1][playerX] == 7){
-                    if (map2[playerY-1][playerX-1] == 3 || map2[playerY-1][playerX-1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY-1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerY--;
-                    playerX--;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX+1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY-1][playerX] == 8){
-                    if (map2[playerY-2][playerX] == 3 || map2[playerY-2][playerX] == 5){
-                        map2[playerY-1][playerX] = 4;
-                        map2[playerY][playerX] = 1;
-                        drawMap2();
-                        break;
-                    }
-                    playerY--;
-                    map2[playerY+1][playerX] = 1;
-                }
-                if (map2[playerY-1][playerX] == 9){
-                    return;
-                }
                 map2[playerY][playerX] = 1;
-                map2[playerY-1][playerX] = 4;
+                map2[playerY - 1][playerX] = 4;
                 drawMap2();
                 break;
             case 2: //Go left
@@ -448,7 +301,7 @@ public class Level1Controller implements Initializable {
                 if (map2[playerY][playerX - 1] == 2)//碰到火
                     return;
                 if (map2[playerY][playerX - 1] == 3) {//碰到冰塊
-                    if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3 || map2[playerY][playerX - 2] == 5 || map2[playerY][playerX - 2] == 6)
+                    if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3 || map2[playerY][playerX - 2] == 5)
                         return;
                     iceMove(2, 3);
                 }
@@ -456,47 +309,6 @@ public class Level1Controller implements Initializable {
                     if (map2[playerY][playerX - 2] == 0 || map2[playerY][playerX - 2] == 3 || map2[playerY][playerX - 2] == 5)
                         return;
                     iceMove(2, 5);
-                }
-                if (map2[playerY][playerX-1] == 6) {
-                    return;
-                }
-                if (map2[playerY][playerX-1] == 7) {
-                    if (map2[playerY][playerX-2] == 3 || map2[playerY][playerX-2] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX - 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    map2[playerY][playerX+1] = 1;
-                }
-                if (map2[playerY][playerX-1] == 8){
-                    if (map2[playerY-1][playerX-1] == 3 || map2[playerY-1][playerX-1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX - 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    playerY--;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX+1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY][playerX-1] == 9){
-                    if (map2[playerY+1][playerX-1] == 3 || map2[playerY+1][playerX-1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX - 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    playerY++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY-1][playerX+1] = 1;
-                    drawMap2();
-                    break;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY][playerX - 1] = 4;
@@ -508,7 +320,7 @@ public class Level1Controller implements Initializable {
                 if (map2[playerY + 1][playerX] == 2)
                     return;
                 if (map2[playerY + 1][playerX] == 3) {
-                    if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5 || map2[playerY + 2][playerX] == 8)
+                    if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5)
                         return;
                     iceMove(3, 3);
                 }
@@ -516,47 +328,6 @@ public class Level1Controller implements Initializable {
                     if (map2[playerY + 2][playerX] == 0 || map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5)
                         return;
                     iceMove(3, 5);
-                }
-                if (map2[playerY + 1][playerX] == 6){
-                    if (map2[playerY+1][playerX+1] == 3 || map2[playerY+1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY + 1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX++;
-                    playerY++;
-                    map2[playerY - 1][playerX - 1] = 1;
-                    map2[playerY][playerX] = 4;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY + 1][playerX] == 7){
-                    if (map2[playerY + 1][playerX - 1] == 3 || map2[playerY + 1][playerX - 1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY + 1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX--;
-                    playerY++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY-1][playerX+1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY + 1][playerX] == 8){
-                    return;
-                }
-                if (map2[playerY + 1][playerX] == 9){
-                    if (map2[playerY + 2][playerX] == 3 || map2[playerY + 2][playerX] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY + 1][playerX] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerY++;
-                    map2[playerY-1][playerX] = 1;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY + 1][playerX] = 4;
@@ -568,7 +339,7 @@ public class Level1Controller implements Initializable {
                 if (map2[playerY][playerX + 1] == 2)
                     return;
                 if (map2[playerY][playerX + 1] == 3) {//碰到冰塊
-                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3 || map2[playerY][playerX + 2] == 5 || map2[playerY][playerX + 2] == 7)
+                    if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3 || map2[playerY][playerX + 2] == 5)
                         return;
                     iceMove(4, 3);
                 }
@@ -576,47 +347,6 @@ public class Level1Controller implements Initializable {
                     if (map2[playerY][playerX + 2] == 0 || map2[playerY][playerX + 2] == 3 || map2[playerY][playerX + 2] == 5)
                         return;
                     iceMove(4, 5);
-                }
-                if (map2[playerY][playerX+1] == 6){
-                    if (map2[playerY][playerX+2] == 3 || map2[playerY][playerX+2] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX + 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX += 1;
-                    map2[playerY][playerX-1] = 1;
-                }
-                if (map2[playerY][playerX+1] == 7){
-                    return;
-                }
-                if (map2[playerY][playerX+1] == 8){
-                    if (map2[playerY-1][playerX+1] == 3 || map2[playerY-1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX + 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX++;
-                    playerY--;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY+1][playerX-1] = 1;
-                    drawMap2();
-                    break;
-                }
-                if (map2[playerY][playerX+1] == 9){
-                    if (map2[playerY+1][playerX+1] == 3 || map2[playerY+1][playerX+1] == 5){
-                        map2[playerY][playerX] = 1;
-                        map2[playerY][playerX + 1] = 4;
-                        drawMap2();
-                        break;
-                    }
-                    playerX++;
-                    playerY++;
-                    map2[playerY][playerX] = 4;
-                    map2[playerY-1][playerX-1] = 1;
-                    drawMap2();
-                    break;
                 }
                 map2[playerY][playerX] = 1;
                 map2[playerY][playerX + 1] = 4;
@@ -626,15 +356,10 @@ public class Level1Controller implements Initializable {
                 break;
         }
     }
-
-
-
-
-
-    public void iceMove(int dir, int type){
-        switch (type){
+    public void iceMove(int dir, int type) {
+        switch (type) {
             case 3:
-                switch (dir){
+                switch (dir) {
                     case 1: //Go up
                         iceY1 = playerY - 1;
                         iceX1 = playerX;
@@ -648,8 +373,7 @@ public class Level1Controller implements Initializable {
                                 iceX2=playerX;
                                 fire=true;
                                 break;
-                            }
-                            else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
+                            } else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
                                 map2[i + 1][playerX] = 3;
                                 map2[playerY - 1][playerX] = 1;
                                 iceY2 = i + 1;
@@ -674,15 +398,13 @@ public class Level1Controller implements Initializable {
                                 iceX2=i+1;
                                 fire=true;
                                 break;
-                            }
-                            else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
+                            } else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
                                 map2[playerY][i + 1] = 3;
                                 map2[playerY][playerX - 1] = 1;
                                 iceY2 = playerY;
                                 iceX2 = i + 1;
                                 break;
-                            }
-                            else {
+                            } else {
                                 map2[playerY][i + 1] = 1;
                                 map2[playerY][i] = 3;
                             }
@@ -691,7 +413,7 @@ public class Level1Controller implements Initializable {
                     case 3: //Go down
                         iceY1 = playerY + 1;
                         iceX1 = playerX;
-                        for (int i = playerY + 2;; i++) {
+                        for (int i = playerY + 2; ; i++) {
                             if (map2[i][playerX] == 2) {//碰到火
                                 firey=i;
                                 firex=playerX;
@@ -701,20 +423,13 @@ public class Level1Controller implements Initializable {
                                 iceX2=playerX;
                                 fire=true;
                                 break;
-                            }
-                            else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
+                            } else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
                                 map2[i - 1][playerX] = 3;
                                 map2[playerY + 1][playerX] = 1;
                                 iceY2 = i - 1;
                                 iceX2 = playerX;
                                 break;
-                            }
-                            else if (map2[i][playerX] == 6){
-                                //TODO
-
-                                break;
-                            }
-                            else {
+                            } else {
                                 map2[i - 1][playerX] = 1;
                                 map2[i][playerX] = 3;
                             }
@@ -723,7 +438,7 @@ public class Level1Controller implements Initializable {
                     case 4: //Go right
                         iceY1 = playerY;
                         iceX1 = playerX + 1;
-                        for (int i = playerX + 2;; i++) {
+                        for (int i = playerX + 2; ; i++) {
                             if (map2[playerY][i] == 2) {//碰到火
                                 firex=i;
                                 firey=playerY;
@@ -733,8 +448,7 @@ public class Level1Controller implements Initializable {
                                 iceY2=playerY;
                                 fire=true;
                                 break;
-                            }
-                            else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
+                            } else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
                                 map2[playerY][i - 1] = 3;
                                 map2[playerY][playerX + 1] = 1;
                                 iceY2 = playerY;
@@ -751,16 +465,15 @@ public class Level1Controller implements Initializable {
                 }
                 break;
             case 5:
-                switch (dir){
+                switch (dir) {
                     case 1: //Go up
                         iceY1 = playerY - 1;
                         iceX1 = playerX;
                         for (int i = playerY - 2; i >= 0; i--) {
                             if (map2[i][playerX] == 2) {//碰到火
                                 map2[i][playerX] = 1;//fire->land
-                                map2[i+1][playerX] = 1;
-                            }
-                            else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
+                                map2[i + 1][playerX] = 1;
+                            } else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
                                 map2[i + 1][playerX] = 5;
                                 map2[playerY - 1][playerX] = 1;
                                 iceY2 = i + 1;
@@ -778,9 +491,8 @@ public class Level1Controller implements Initializable {
                         for (int i = playerX - 2; i >= 0; i--) {
                             if (map2[playerY][i] == 2) {//碰到火
                                 map2[playerY][i] = 1;//fire->land
-                                map2[playerY][i+1] = 1;
-                            }
-                            else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
+                                map2[playerY][i + 1] = 1;
+                            } else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
                                 map2[playerY][i + 1] = 5;
                                 map2[playerY][playerX - 1] = 1;
                                 iceY2 = playerY;
@@ -795,12 +507,11 @@ public class Level1Controller implements Initializable {
                     case 3:
                         iceY1 = playerY + 1;
                         iceX1 = playerX;
-                        for (int i = playerY + 2;; i++) {
+                        for (int i = playerY + 2; ; i++) {
                             if (map2[i][playerX] == 2) {//碰到火
                                 map2[i][playerX] = 1;//fire->land
-                                map2[i-1][playerX] = 1;
-                            }
-                            else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
+                                map2[i - 1][playerX] = 1;
+                            } else if ((map2[i][playerX] == 3 || map2[i][playerX] == 0 || map2[i][playerX] == 5)) {//碰到冰塊跟牆壁
                                 map2[i - 1][playerX] = 5;
                                 map2[playerY + 1][playerX] = 1;
                                 iceY2 = i - 1;
@@ -815,12 +526,11 @@ public class Level1Controller implements Initializable {
                     case 4:
                         iceY1 = playerY;
                         iceX1 = playerX + 1;
-                        for (int i = playerX + 2;; i++) {
+                        for (int i = playerX + 2; ; i++) {
                             if (map2[playerY][i] == 2) {//碰到火
                                 map2[playerY][i] = 1;//fire->land
-                                map2[playerY][i-1] = 1;
-                            }
-                            else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
+                                map2[playerY][i - 1] = 1;
+                            } else if ((map2[playerY][i] == 3 || map2[playerY][i] == 0 || map2[playerY][i] == 5)) {//碰到冰塊跟牆壁
                                 map2[playerY][i - 1] = 5;
                                 map2[playerY][playerX + 1] = 1;
                                 iceY2 = playerY;
@@ -840,37 +550,14 @@ public class Level1Controller implements Initializable {
                 break;
         }
     }
-    public void toLevel2() {
-        try {
-            //產生level1的scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("level2.fxml"));
-            Parent root = loader.load();
-            Scene level2 = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(level2);
-            stage.setTitle("Level 2");
-            Level2Controller controller=loader.getController();
-            controller.drawMap();
-            prevStage.close();
-            controller.setPrevStage(stage);
-            stage.show();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void setPrevStage(Stage stage){
-        this.prevStage = stage;
-    }
-
     private void iceAnimation(int iceType ,int i,int j) {
         Image iceImage;
         ImageView ice;
         if (iceType == 3) {
-            iceImage = new Image(getClass().getResourceAsStream("/image/ice.png"), tube, tube, false, false);
+            iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/ice.png")), tube, tube, false, false);
             ice = new ImageView(iceImage);
         } else {
-            iceImage = new Image(getClass().getResourceAsStream("/image/Au.jpg"), tube, tube, false, false);
+            iceImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/Au.jpg")), tube, tube, false, false);
             ice = new ImageView(iceImage);
         }
         switch (direct) {
@@ -880,7 +567,7 @@ public class Level1Controller implements Initializable {
                 ice.setY(iceY1 * tube);
                 int sleep = 10;//ms 停幾秒
                 Timeline t = new Timeline();
-                KeyFrame kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
+                KeyFrame kf = new KeyFrame(Duration.millis(sleep), new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
                         ice.setY(ice.getY() - 10);
@@ -889,12 +576,12 @@ public class Level1Controller implements Initializable {
                             GridPane.setConstraints(ice, j, i);
                             gridpane.getChildren().add(ice);
                             t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
+                            if (fire) {
+                                Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
                                 ImageView land = new ImageView(landImage);
                                 GridPane.setConstraints(land, j, i);
                                 gridpane.getChildren().add(land);
-                                fire=false;
+                                fire = false;
                             }
                         }
                     }
@@ -911,7 +598,7 @@ public class Level1Controller implements Initializable {
                 ice.setY(iceY1 * tube);
                 sleep = 10;//ms 停幾秒
                 t = new Timeline();
-                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
+                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
                         ice.setY(ice.getY() + 10);
@@ -920,12 +607,12 @@ public class Level1Controller implements Initializable {
                             GridPane.setConstraints(ice, j, i);
                             gridpane.getChildren().add(ice);
                             t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
+                            if (fire) {
+                                Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
                                 ImageView land = new ImageView(landImage);
                                 GridPane.setConstraints(land, j, i);
                                 gridpane.getChildren().add(land);
-                                fire=false;
+                                fire = false;
                             }
                         }
                     }
@@ -940,7 +627,7 @@ public class Level1Controller implements Initializable {
                 ice.setY(iceY1 * tube);
                 sleep = 10;//ms 停幾秒
                 t = new Timeline();
-                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
+                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
                         ice.setX(ice.getX() - 10);
@@ -949,12 +636,12 @@ public class Level1Controller implements Initializable {
                             GridPane.setConstraints(ice, j, i);
                             gridpane.getChildren().add(ice);
                             t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
+                            if (fire) {
+                                Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
                                 ImageView land = new ImageView(landImage);
                                 GridPane.setConstraints(land, j, i);
                                 gridpane.getChildren().add(land);
-                                fire=false;
+                                fire = false;
                             }
                         }
                     }
@@ -969,7 +656,7 @@ public class Level1Controller implements Initializable {
                 ice.setY(iceY1 * tube);
                 sleep = 10;//ms 停幾秒
                 t = new Timeline();
-                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<ActionEvent>() {
+                kf = new KeyFrame(Duration.millis(sleep), new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
                         ice.setX(ice.getX() + 10);
@@ -978,12 +665,12 @@ public class Level1Controller implements Initializable {
                             GridPane.setConstraints(ice, j, i);
                             gridpane.getChildren().add(ice);
                             t.pause();
-                            if(fire) {
-                                Image landImage = new Image(getClass().getResourceAsStream("/image/land.jpg"), tube, tube, false, false);
+                            if (fire) {
+                                Image landImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/land.jpg")), tube, tube, false, false);
                                 ImageView land = new ImageView(landImage);
                                 GridPane.setConstraints(land, j, i);
                                 gridpane.getChildren().add(land);
-                                fire=false;
+                                fire = false;
                             }
                         }
                     }
@@ -995,5 +682,57 @@ public class Level1Controller implements Initializable {
 
         }
 
+    }
+
+    public void toLevel2() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("level2.fxml"));
+            Parent root = loader.load();
+            Scene level2 = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(level2);
+            stage.setTitle("Level 2");
+            Level2Controller controller = loader.getController();
+            controller.drawMap();
+            prevStage.close();
+            controller.setPrevStage(stage);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setPrevStage(Stage stage) {
+        this.prevStage = stage;
+    }
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        SetLevel();
+
+    }
+
+
+    private void SetLevel() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("PD2Project-master/src/sample/level.txt"));
+            StringBuilder ib = new StringBuilder();
+            String s;
+
+            while (br.readLine() != null) {
+                s = "1";
+                ib.append(s);
+            }
+            br.close();
+
+            FileOutputStream fo = new FileOutputStream("PD2Project-master/src/sample/level.txt");
+            fo.write(ib.toString().getBytes());
+            fo.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

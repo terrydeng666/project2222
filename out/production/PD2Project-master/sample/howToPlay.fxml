@@ -1,9 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
+
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Text?>
-<AnchorPane  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.HowToPlayController" prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx">
     <GridPane>
-        <Label text="Hello" prefWidth="50" prefHeight="50" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+      <columnConstraints>
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
+     <Label layoutX="139.0" layoutY="66.0" prefHeight="42.0" prefWidth="324.0" text="使用W、A、S、D來移動角色">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="212.0" layoutY="14.0" prefHeight="47.0" prefWidth="151.0" text="操作說明">
+      <font>
+         <Font size="36.0" />
+      </font>
+   </Label>
+   <Label layoutX="57.0" layoutY="150.0" prefHeight="42.0" prefWidth="488.0" text="推動冰塊移動，當冰塊碰到火焰會滅火並消失">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="231.0" layoutY="108.0" prefHeight="42.0" prefWidth="141.0" text="按R重新開始">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="180.0" layoutY="234.0" prefHeight="42.0" prefWidth="240.0" text="將所有火熄滅完成關卡">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="153.0" layoutY="192.0" prefHeight="42.0" prefWidth="296.0" text="黃金冰塊碰到火焰不會消失">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="59.0" fitWidth="80.0" layoutX="127.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/ice.png" />
+      </image>
+   </ImageView>
+   <Label layoutX="135.0" layoutY="300.0" prefHeight="31.0" prefWidth="39.0" text="冰塊">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="70.0" fitWidth="54.0" layoutX="233.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/Au.jpg" />
+      </image>
+   </ImageView>
+   <Label layoutX="220.0" layoutY="300.0" prefHeight="31.0" prefWidth="80.0" text="黃金冰塊">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="54.0" fitWidth="65.0" layoutX="347.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/player.png" />
+      </image>
+   </ImageView>
+   <Label layoutX="353.0" layoutY="300.0" prefHeight="31.0" prefWidth="39.0" text="玩家">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="54.0" fitWidth="61.0" layoutX="450.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../image/fire.png" />
+      </image>
+   </ImageView>
+   <Label layoutX="456.0" layoutY="307.0" prefHeight="25.0" prefWidth="39.0" text="火焰">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
 </AnchorPane>
